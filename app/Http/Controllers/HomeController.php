@@ -64,7 +64,7 @@ class HomeController extends Controller
         $firmado    = $oficios[0]->firmado;
         $nameCerys  = DB::table('cerys')->where('numero', $oficios[0]->cerys)->get();
         $cerys      = $nameCerys[0]->nombre;
-        return view('efirma2', compact('oficio', 'firmado', 'cerys'));
+        return view('efirma', compact('oficio', 'firmado', 'cerys'));
     }
 
     public function listalotes($lotes, $oficio, $cerys) {
