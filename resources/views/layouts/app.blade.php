@@ -96,7 +96,7 @@
                         <!-- Branding Image -->
                         {{--<a class="navbar-brand" href="{{ url('/') }}">--}}
                         <a class="navbar-brand" href="">
-                            {{--{{ config('app.name', 'Laravel') }}--}}Credenciales
+                            {{--{{ config('app.name', 'Laravel') }}--}}Entrega eFirma
                         </a>
                     </div>
 
