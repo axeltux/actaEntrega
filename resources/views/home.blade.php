@@ -16,7 +16,7 @@
                 <form class="form-horizontal" method="POST" action="{{ route('oficios') }}">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <div class="col-md-6 col-md-offset-2">
+                        <div class="col-md-6 col-md-offset-1">
                             <div class="btn-group" role="group">
                                 <label for="cerys" class="btn-group">Cerys:&nbsp;&nbsp;</label>
                                 <select class="btn btn-default dropdown-toggle" name="cerys" id="cerys" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
