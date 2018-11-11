@@ -6,13 +6,13 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" media="all">
   </head>
   <body>
-    <header class="clearfix">    
+    <header class="clearfix">
       <div id="logo" align="center">
         <img src="sat.png">
       </div>
       <div id="titulo">
         <b>Administración General de Recursos y Servicios<br>Administración Central de Control y Seguridad Institucional<br>Administración de Proyectos, Tecnologías de la Información, CCTV y Servicios Vehiculares</b>
-      </div>      
+      </div>
     </header>
     <main>
     <center><h4>ACTA DE ENTREGA RECEPCIÓN DE BIENES (CREDENCIALES)<br>PROYECTO "CAyAS"</h4></center>
@@ -39,7 +39,7 @@
                 <th class="service">CANTIDAD</th>
               </tr>
             </thead>
-            <tbody>                
+            <tbody>
               <tr>
                   <td class="service">{{ $oficios->oficio }}</td>
                   <td class="desc">{{ $oficios->lotes }}</td>
@@ -49,7 +49,7 @@
           </table>
           <p align="justify">
           Asimismo, se reciben <b>{{ $totalLotes }}</b> porta gafetes transparentes y <b>{{ $totalLotes }}</b> cintillas, que contiene el logotipo y nombre del SAT.---------------------------------------------------<br>
-          Total de Credenciales: Número: <b>{{ $totalLotes }}</b> Letra: <b>{{ strtolower(NumeroALetras::convertir($totalLotes)) }}</b>------------------------------------.</p>          
+          Total de Credenciales: Número: <b>{{ $totalLotes }}</b> Letra: <b>{{ strtolower(NumeroALetras::convertir($totalLotes)) }}</b>------------------------------------.</p>
         </td>
       </tr>
       <tr>
@@ -57,7 +57,7 @@
           Objeto de la entrega de bienes
         </td>
         <td>
-          <p align="justify">Las nuevas credenciales de identificación oficial para personal SAT, de las Unidades Administrativas antes indicadas fueron recibidas por medio de mensajería acelerada el día de hoy <b>{{ date("d") }}</b> de <b>{{ ToolsPHP::NombreMes(date("m")) }}</b> del año <b>{{ strtolower(NumeroALetras::convertir(date("Y"))) }}</b> y cumpliendo con toda y cada una de las especificaciones del Anexo Técnico y propuesta técnica del proveedor.----------------------------------------------------------</p>          
+          <p align="justify">Las nuevas credenciales de identificación oficial para personal SAT, de las Unidades Administrativas antes indicadas fueron recibidas por medio de mensajería acelerada el día de hoy <b>{{ date("d") }}</b> de <b>{{ ToolsPHP::NombreMes(date("m")) }}</b> del año <b>{{ strtolower(NumeroALetras::convertir(date("Y"))) }}</b> y cumpliendo con toda y cada una de las especificaciones del Anexo Técnico y propuesta técnica del proveedor.----------------------------------------------------------</p>
         </td>
       </tr>
       <tr>
