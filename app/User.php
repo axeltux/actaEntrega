@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-    //protected $dateFormat = 'd-m-Y H:i:s';
+    protected $dateFormat = 'd-m-Y H:i:s';
 
     /**
      * The attributes that are mass assignable.

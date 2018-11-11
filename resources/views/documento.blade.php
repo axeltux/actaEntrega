@@ -13,8 +13,8 @@
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
-                    @endif                    
-                    <p><h3>Se ha generado el acuse de recibo del oficio: <b>{{ $oficio }}</b> del Cerys: <b>{{ $cerys }}</b> firmado por: <b>{{ $oficios[0]->firmadoPor }}</b> con RFC: <b>{{ $oficios[0]->RFC }}</b>.</h3></p>
+                    @endif
+                    <p><h3>Se ha generado el acuse de recibo del oficio: <b>{{ $oficio }}</b> del Cerys: <b>{{ $cerys }}</b> firmado por: <b>{{ $oficios->firmadoPor }}</b> con RFC: <b>{{ $oficios->RFC }}</b>.</h3></p>
                     <p><h4>A continuacion se muestran las opciones para poder visualizar o descargar el documento en su equipo de computo:</h4></p>
                     <br><br>
                     <form style="display: inline" action="{{ route('pdf', [$oficio, 1]) }}" target="_blank">

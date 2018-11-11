@@ -22,7 +22,7 @@
                                 <select class="btn btn-default dropdown-toggle" name="cerys" id="cerys" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <option value="" />Seleccione...</option>
                                     @foreach($cerys as $listas)
-                                      <option value="{{$listas->numero}}">{{$listas->nombre}}</option>
+                                      <option value="{{$listas->Numero}}">{{$listas->Nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>

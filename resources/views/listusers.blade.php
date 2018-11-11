@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 1, "asc" ]]' data-page-length="10">
+                    <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "desc" ]]' data-page-length="10">
                         <thead>
                             <tr>
                                 <th>ID</th>

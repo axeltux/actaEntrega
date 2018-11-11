@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default">
                 <div class="panel-heading"><b>LISTADO DE LOTES DEL OFICIO: {{ $oficio }} || Cerys: {{ $nom }}</b></div>
                 {{ csrf_field() }}
@@ -34,7 +34,7 @@
                                         <td> {{ $contador += 1 }} </td>
                                         <td> {{ $element->NumeroEmpleado }} </td>
                                         <td> {{ ToolsPHP::NomEmpleados($element->NumeroEmpleado) }} </td>
-                                        <td> {{ $element->UniAdmin }} </td>
+                                        <td> {{ $element->UnidadAdmin }} </td>
                                         <td> {{ $element->Cerys }} </td>
                                         <td> Lote-{{ $element->Lote }} </td>
                                     </tr>

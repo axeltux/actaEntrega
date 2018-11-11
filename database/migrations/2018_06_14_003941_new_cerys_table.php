@@ -14,9 +14,9 @@ class NewCerysTable extends Migration
     public function up()
     {
         Schema::create('cerys', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('numero')->unique();
-            $table->string('nombre');
+            $table->increments('Id');
+            $table->integer('Numero')->unique();
+            $table->string('Nombre');
         });
     }
 

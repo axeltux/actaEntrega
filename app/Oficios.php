@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Oficios extends Model
 {
     //use Notifiable;
-  	protected $table = 'oficios';
-  	//protected $dateFormat = 'd-m-Y H:i:s';
+  	protected $table = 'oficio';
+  	protected $dateFormat = 'd-m-Y H:i:s';
 
 	  /**
 	   * The attributes that are mass assignable.

@@ -10,7 +10,7 @@
                 if (document.getElementById('btnEnviarForm') !== null) {
                     console.log('Se cargó el Widget de Firmado');
                     //Añadirle un evento
-                    document.getElementById('btnEnviarForm').onclick = btnEnviarFIELOnClick;            
+                    document.getElementById('btnEnviarForm').onclick = btnEnviarFIELOnClick;
                     clearInterval(timer);
                 }
             }, 200);
@@ -22,8 +22,8 @@
             var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
             var token = $('#token').val();
             var rfcSession = '{{ Auth::user()->username }}';
-            var cadenaOriginalEntrada = rfcSession+'|'+token+'|'+fecha+'|'+hora;                 
-            //Método que genera el firmado 
+            var cadenaOriginalEntrada = rfcSession+'|'+token+'|'+fecha+'|'+hora;
+            //Método que genera el firmado
             generaFirmaIndividual([{cadenaOriginal:cadenaOriginalEntrada}],
                 {validarRFCSession:rfcSession},
                     function (error, resultado) {
@@ -32,7 +32,7 @@
                             // Mostrar error al usuario.
                             alert(catalogoErrores[error].msg_vista);
                         } else {
-                            console.log("Success");                                                
+                            console.log("Success");
                             //Utilizar resultados
                             console.log(resultado[0].firmaDigital);
                             console.log(resultado[0].cadenaOriginalGenerada);
@@ -52,7 +52,7 @@
                                           'oficio': oficio,
                                           'rfc':    rfcSession,
                                           'fecha':  fecha,
-                                          'hora':   hora 
+                                          'hora':   hora
                                         };
                             if(firmado == 1){
                                 alertify.alert("<center><h3>El documento ya fue firmado.</h3></center><br>");
@@ -106,7 +106,7 @@
                     @endif
                     <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div id="firmado-widget-container"></div>
-                </div>                
+                </div>
             </div>
             <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
         </div>

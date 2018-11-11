@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Acuse entrega: {{ $oficio }}</title>
+    <title>Acuse entrega: {{ $oficios->oficio }}</title>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" media="all">
   </head>
   <body>
@@ -39,14 +39,12 @@
                 <th class="service">CANTIDAD</th>
               </tr>
             </thead>
-            <tbody>
-                @foreach($oficios as $element)
-                    <tr>
-                        <td class="service">{{ $element->oficio }}</td>
-                        <td class="desc">{{ $element->lotes }}</td>
-                        <td class="desc"><b>{{ $totalLotes }} credenciales</b></td>
-                    </tr>
-                @endforeach
+            <tbody>                
+              <tr>
+                  <td class="service">{{ $oficios->oficio }}</td>
+                  <td class="desc">{{ $oficios->lotes }}</td>
+                  <td class="desc"><b>{{ $totalLotes }} credenciales</b></td>
+              </tr>
             </tbody>
           </table>
           <p align="justify">
@@ -73,12 +71,12 @@
     </table>
       <div id="notices">
         <div>Firma digital:</div>
-        <div class="notice" style="width:700px; word-wrap:break-word;"> {{ $firmaD }} </div>
+        <div class="notice" style="width:700px; word-wrap:break-word;"> {{ $oficios->firmaDigital }} </div>
       </div>
       <br>
       <div id="notices">
         <div>Sello digital:</div>
-        <div class="notice" style="width:700px; word-wrap:break-word;">{{ $selloD }}</div>
+        <div class="notice" style="width:700px; word-wrap:break-word;">{{ $oficios->selloDigital }}</div>
       </div>
     </main>
     <footer>

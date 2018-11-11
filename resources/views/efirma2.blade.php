@@ -9,7 +9,7 @@
                 if (document.getElementById('btn-send') !== null) {
                     console.log('Se cargó el Widget de Firmado');
                     //Añadirle un evento
-                    document.getElementById('btn-send').onclick = btnEnviarFIELOnClick;            
+                    document.getElementById('btn-send').onclick = btnEnviarFIELOnClick;
                     clearInterval(timer);
                 }
             }, 200);
@@ -36,7 +36,7 @@
                       'oficio': oficio,
                       'rfc':    rfcSession,
                       'fecha':  fecha,
-                      'hora':   hora 
+                      'hora':   hora
                     };
         if(firmado == 1){
             alertify.alert("<center><h3>El documento ya fue firmado.</h3></center><br>");
@@ -85,7 +85,7 @@
                     <button type="submit" class="btn btn-primary" id="btn-send">
                         Enviar
                     </button>
-                </div>                
+                </div>
             </div>
             <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
         </div>

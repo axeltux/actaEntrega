@@ -9,7 +9,7 @@ class Cerys extends Model
 {
   use Notifiable;
   protected $table = 'cerys';
-  //protected $dateFormat = 'd-m-Y H:i:s';
+  protected $dateFormat = 'd-m-Y H:i:s';
 
   /**
    * The attributes that are mass assignable.
@@ -17,7 +17,7 @@ class Cerys extends Model
    * @var array
    */
   protected $fillable = [
-      'numero', 'nombre',
+      'Numero', 'Nombre',
   ];
 
   /**

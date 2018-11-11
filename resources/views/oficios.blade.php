@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading"><b>LISTADO DE OFICIOS</b></div>
+                <div class="panel-heading"><b>LISTADO DE OFICIOS Cerys: </b> <strong>{{ $cerys }}</strong></div>
                 {{ csrf_field() }}
                 <div class="panel-body">
                     @if (session('status'))
@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    @if(!$oficios)
+                    @if(count($oficios)<1)
                         <h2>No existen oficios para este Cerys.</h2>
                     @else                    
                         <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "asc" ]]' data-page-length="10">

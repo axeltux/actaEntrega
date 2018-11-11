@@ -77,6 +77,10 @@
                 color: #ffffff;
                 text-decoration: none;
             }
+            .caja_inline {
+                display: inline-block;
+                width: 360px;
+            }
         </style>
     </head>
     <body>
@@ -94,10 +98,15 @@
                         </button>
 
                         <!-- Branding Image -->
-                        {{--<a class="navbar-brand" href="{{ url('/') }}">--}}
-                        <a class="navbar-brand" href="">
-                            {{--{{ config('app.name', 'Laravel') }}--}}Entrega eFirma
-                        </a>
+                        <div class="caja_inline">
+                            <a class="navbar-brand" href="{{ url('/home') }}">
+                                {{--Entrega eFirma--}}
+                                <span>
+                                    <img src="{{URL::to('/')}}/logo_sat.png" height="30" width="35"/>
+                                </span>
+                                <span>Entrega eFirma</span>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
