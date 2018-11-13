@@ -161,8 +161,7 @@ class HomeController extends Controller
         //Si la sesion expiro mandarlo al login
         if(!Auth::check()){
             return redirect('/login');
-        }
-        //valido el ajax
+        }        
         if ($request->ajax()) {
             $error = null;
             DB::beginTransaction();
