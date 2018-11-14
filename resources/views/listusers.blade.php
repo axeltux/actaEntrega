@@ -41,7 +41,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>                
+                </div>
             </div>
             <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
         </div>

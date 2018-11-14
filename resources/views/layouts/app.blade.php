@@ -13,9 +13,10 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('DataTables/datatables.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('fonts/fontawesome/css/all.css') }}" rel="stylesheet" />
         <link href="{{ asset('alertify.js/themes/alertify.core.css') }}" rel="stylesheet" />
         <!-- <link href="{{ asset('alertify.js/themes/alertify.default.css') }}" rel="stylesheet" id="toggleCSS"/> -->
-        <link href="{{ asset('alertify.js/themes/alertify.bootstrap.css') }}" rel="stylesheet" />        
+        <link href="{{ asset('alertify.js/themes/alertify.bootstrap.css') }}" rel="stylesheet" />
         <style type="text/css">
             .active{
                 text-decoration: none;
@@ -25,54 +26,54 @@
                 color: red;
                 font-size: 12px;
             }
-            .enlaceboton {    
-                font-family: verdana, arial, sans-serif; 
-                font-size: 10pt; 
-                font-weight: bold; 
-                padding: 4px; 
-                background-color: #ffffcc; 
-                color: #666666; 
-                text-decoration: none; 
-            } 
-            .enlaceboton:link, 
-            .enlaceboton:visited { 
-               border-top: 1px solid #cccccc; 
-               border-bottom: 2px solid #666666; 
-               border-left: 1px solid #cccccc; 
+            .enlaceboton {
+                font-family: verdana, arial, sans-serif;
+                font-size: 10pt;
+                font-weight: bold;
+                padding: 4px;
+                background-color: #ffffcc;
+                color: #666666;
+                text-decoration: none;
+            }
+            .enlaceboton:link,
+            .enlaceboton:visited {
+               border-top: 1px solid #cccccc;
+               border-bottom: 2px solid #666666;
+               border-left: 1px solid #cccccc;
                border-right: 2px solid #666666;
                text-decoration: none;
-            } 
-            .enlaceboton:hover { 
-                border-bottom: 1px solid #cccccc; 
-                border-top: 2px solid #666666; 
-                border-right: 1px solid #cccccc; 
+            }
+            .enlaceboton:hover {
+                border-bottom: 1px solid #cccccc;
+                border-top: 2px solid #666666;
+                border-right: 1px solid #cccccc;
                 border-left: 2px solid #666666;
                 text-decoration: none;
             }
             .alertify-log-custom {
                 background: blue;
             }
-            .enlaceboton2 {    
-                font-family: verdana, arial, sans-serif; 
-                font-size: 10pt; 
-                padding: 4px; 
-                background-color: #5882FA; 
-                color: #ffffff; 
-                text-decoration: none; 
-            } 
-            .enlaceboton2:link, 
-            .enlaceboton2:visited { 
-               border-top: 1px solid #cccccc; 
-               border-bottom: 2px solid #666666; 
-               border-left: 1px solid #cccccc; 
+            .enlaceboton2 {
+                font-family: verdana, arial, sans-serif;
+                font-size: 10pt;
+                padding: 4px;
+                background-color: #5882FA;
+                color: #ffffff;
+                text-decoration: none;
+            }
+            .enlaceboton2:link,
+            .enlaceboton2:visited {
+               border-top: 1px solid #cccccc;
+               border-bottom: 2px solid #666666;
+               border-left: 1px solid #cccccc;
                border-right: 2px solid #666666;
                color: #ffffff;
                text-decoration: none;
-            } 
-            .enlaceboton2:hover { 
-                border-bottom: 1px solid #cccccc; 
-                border-top: 2px solid #666666; 
-                border-right: 1px solid #cccccc; 
+            }
+            .enlaceboton2:hover {
+                border-bottom: 1px solid #cccccc;
+                border-top: 2px solid #666666;
+                border-right: 1px solid #cccccc;
                 border-left: 2px solid #666666;
                 color: #ffffff;
                 text-decoration: none;
@@ -190,6 +191,6 @@
                     return false;
                 }
             });
-        </script>       
+        </script>
     </body>
 </html>

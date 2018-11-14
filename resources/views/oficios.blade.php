@@ -15,7 +15,7 @@
                     @endif
                     @if(count($oficios)<1)
                         <h2>No existen oficios para este Cerys.</h2>
-                    @else                    
+                    @else
                         <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "asc" ]]' data-page-length="10">
                             <thead>
                                 <tr>
@@ -40,26 +40,36 @@
                                                 <b>No</b>
                                             @endif
                                         </td>
-                                        <td>                                            
+                                        <td>
                                             <form style="display: inline" action="{{ route('listaLotes', [$element->lotes, $element->oficio, $element->cerys]) }}">
                                                 <button type="submit" class="btn btn-primary">Ver</button>
                                             </form>
-                                            @if($element->firmado)
-                                                <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
-                                                    <button type="submit" class="btn btn-warning">PDF</button>
-                                                </form>
+                                            @if($element->status)
+                                                @if($element->firmado)
+                                                    <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
+                                                        <button type="submit" class="btn btn-warning">PDF</button>
+                                                    </form>
+                                                @else
+                                                    <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
+                                                        <button type="submit" class="btn btn-success">Firmar</button>
+                                                    </form>
+                                                @endif
                                             @else
-                                                <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
-                                                    <button type="submit" class="btn btn-success">Firmar</button>
+                                                <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
+                                                    <button type="submit" class="btn btn-success" title="Aceptar oficio">Aceptar</button>
+                                                </form>
+
+                                                <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
+                                                    <button type="submit" class="btn btn-danger" title="Rechazar oficio">Rechazar</button>
                                                 </form>
                                             @endif
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     @endif
-                </div>                
+                </div>
             </div>
             <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
         </div>
