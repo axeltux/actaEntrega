@@ -33,7 +33,7 @@ class PdfController extends Controller
         $nameCerys  = Cerys::where('Numero',$oficios->cerys)->first();
         $cerys      = $nameCerys->Nombre;
         //Dibujamos la vista con render
-        $view       =  \View::make('pdf.invoice2', compact('oficios', 'totalLotes', 'date', 'fecha', 'hora', 'cerys'))->render();
+        $view       = \View::make('pdf.invoice2', compact('oficios', 'totalLotes', 'date', 'fecha', 'hora', 'cerys'))->render();
         $pdf        = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         if ($tipo == 1) {
