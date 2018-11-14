@@ -174,6 +174,7 @@ class HomeController extends Controller
                 $firmadoEl      = date('d-m-Y H:i:s', $fechaString);
                 $oficios        = Oficios::where('oficio', $request->oficio)->first();
 
+                //Guardamos la firma electronica en oficios
                 if ($oficios) {
                     $oficios->firmado       = 1;
                     $oficios->firmadoPor    = $request->nombre;
@@ -184,7 +185,9 @@ class HomeController extends Controller
                     if ($oficios->save()) {
                         //Actualizamos a enviado el lote al firmar el oficio
                         $array  = explode(',', $oficios->lotes);
-                        DB::table('cred_lote')->whereIn('NoLote', $array)->update(array('Estatus' => 'Entregada'));
+                        DB::table('cred_lote')
+                                    ->whereIn('NoLote', $array)
+                                    ->update(array('Estatus' => 'Entregada'));
                     }
                 } else {
                     return response()->json([
