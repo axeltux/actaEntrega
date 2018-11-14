@@ -35,7 +35,11 @@ class HomeController extends Controller
             return redirect('/login');
         }
         //Obtenemos los datos del cerys
-        $cerys = Cerys::all();
+        if (Auth::user()->username === 'Admin') {
+            $cerys = Cerys::all();
+        }else{
+            $cerys  = Cerys::where('Numero', Auth::user()->cerys)->get();
+        }
         return view('home', compact('cerys'));
     }
 

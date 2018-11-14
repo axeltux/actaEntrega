@@ -39,6 +39,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('cerys') ? ' has-error' : '' }}">
+                            <label for="cerys" class="col-md-4 control-label">Seleccione el Cerys</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="cerys" id="cerys" value="{{ old('cerys') }}" required>
+                                    <option value="" />Seleccione un cerys</option>
+                                    @foreach($cerys as $listas)
+                                      <option value="{{$listas->Numero}}">{{$listas->Nombre}}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('cerys'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('cerys') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">Dirección de E-Mail</label>
 
