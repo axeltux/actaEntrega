@@ -14,7 +14,7 @@ class AddCerysToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('cerys')->nullable()->after('password');
+            $table->integer('cerys');
         });
     }
 
