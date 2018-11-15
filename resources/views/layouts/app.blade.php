@@ -155,7 +155,7 @@
                                 'tipo': 1,
                                 'comment': '',
                             };
-                alertify.confirm("<h3>¿Confirma la aceptación del oficio: <b>"+ of +"</b> del Cerys: <b>" + cer + "</b>?</h3><br>", function (e) {
+                alertify.confirm("<center><h3>¿Confirma la aceptación del oficio: <b>"+ of +"</b> del Cerys: <b>" + cer + "</b>?</h3></center><br>", function (e) {
                     if (e) {
                         $.ajax({
                             url:        url,
@@ -195,9 +195,9 @@
                 var id = $('#idMotivo').val();
                 $('#rechazar').modal('toggle');
                 if(motivo === '' || motivo === null){
-                    alertify.error("<h4>El motivo no puede ser nulo.</h4>");
+                    alertify.error("<h4>El motivo no puede ser nulo</h4>");
                 }else if(motivo.length < 10){
-                    alertify.error("<h4>El motivo es muy corto.</h4>");
+                    alertify.error("<h4>La descripción es muy corta</h4>");
                 }else{
                     var token   = $('#token').val();
                     var url     = route('statusOficio');
@@ -207,7 +207,7 @@
                                     'tipo': 2,
                                     'comment': motivo,
                                 };
-                    alertify.confirm("<h3>¿Confirma el rechazo del oficio?</h3><br>", function (e) {
+                    alertify.confirm("<center><h3>¿Confirma el rechazo del oficio?</h3></center><br>", function (e) {
                         if (e) {
                             $.ajax({
                                 url:        url,

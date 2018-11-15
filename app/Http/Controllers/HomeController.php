@@ -189,7 +189,7 @@ class HomeController extends Controller
                         //Actualizamos a enviado el lote al firmar el oficio
                         $array  = explode(',', $oficios->lotes);
                         DB::table('cred_lote')
-                                    ->whereIn('id', $array)
+                                    ->whereIn('NoLote', $array)
                                     ->update(array('EstatusFirma' => 'Firmado'));
                     }
                 } else {
@@ -285,7 +285,7 @@ class HomeController extends Controller
                             $estado = 'Aceptado';
                         }
                         DB::table('cred_lote')
-                                    ->whereIn('id', $array)
+                                    ->whereIn('NoLote', $array)
                                     ->update(array('EstatusCerys' => $estado,
                                                    'EstatusFirma' => $estadoFirma,
                                                    'Comentarios'=> $request->comment

@@ -42,7 +42,7 @@
             alertify.alert("<center><h3>El documento ya fue firmado.</h3></center><br>");
             return false;
         }
-        alertify.confirm("<h3>¿Confirma la generación del sello y firma digital del oficio: <b>"+ oficio +"</b> del Cerys: <b>" + cerys + "</b>?</h3><br>", function (e) {
+        alertify.confirm("<center><h3>¿Confirma la generación del sello y firma digital del oficio: <b>"+ oficio +"</b> del Cerys: <b>" + cerys + "</b>?</h3></center><br>", function (e) {
             if (e) {
                 $.ajax({
                     url:        url,
