@@ -26,9 +26,9 @@
                 color: red;
                 font-size: 12px;
             }
-            textarea:invalid {
+            /*textarea:invalid {
                 background:red;
-            }
+            }*/
             .caja_inline {
                 display: inline-block;
                 width: 360px;
