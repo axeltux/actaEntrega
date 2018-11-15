@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
+@routes
+
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading"><b>LISTADO DE OFICIOS Cerys: </b> <strong>{{ $cerys }}</strong></div>
                 {{ csrf_field() }}
+                <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
@@ -42,25 +46,40 @@
                                         </td>
                                         <td>
                                             <form style="display: inline" action="{{ route('listaLotes', [$element->lotes, $element->oficio, $element->cerys]) }}">
-                                                <button type="submit" class="btn btn-primary">Ver</button>
+                                                <button type="submit" class="btn btn-primary" title="Ver oficio">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
                                             </form>
                                             @if($element->status)
                                                 @if($element->firmado)
                                                     <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
-                                                        <button type="submit" class="btn btn-warning">PDF</button>
+                                                        <button type="submit" class="btn btn-default" title="Ver PDF">
+                                                            <i class="far fa-file-pdf"></i>
+                                                        </button>
+                                                    </form>
+                                                    <form style="display: inline" action="{{ route('pdf', [$element->oficio, 2]) }}">
+                                                        <button type="submit" class="btn btn-warning" title="Descargar documento">
+                                                            <i class="fa fa-file-download"></i>
+                                                        </button>
                                                     </form>
                                                 @else
                                                     <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
-                                                        <button type="submit" class="btn btn-success">Firmar</button>
+                                                        <button type="submit" class="btn btn-success" title="Firmar oficio">
+                                                            <i class="fa fa-file-signature"></i>
+                                                        </button>
                                                     </form>
                                                 @endif
                                             @else
-                                                <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
-                                                    <button type="submit" class="btn btn-success" title="Aceptar oficio">Aceptar</button>
+                                                <form style="display: inline">
+                                                    <a href="#" OnClick="aceptar({{ $element->id }}, '{{ $element->oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
+                                                        <i class="fa fa-check"></i>
+                                                    </a>
                                                 </form>
 
-                                                <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
-                                                    <button type="submit" class="btn btn-danger" title="Rechazar oficio">Rechazar</button>
+                                                <form style="display: inline">
+                                                        <a href="#" OnClick="rechazar({{ $element->id }});"class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
                                                 </form>
                                             @endif
                                         </td>
@@ -71,7 +90,7 @@
                     @endif
                 </div>
             </div>
-            <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
+            <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a><br><br>
         </div>
     </div>
 </div>

@@ -26,57 +26,8 @@
                 color: red;
                 font-size: 12px;
             }
-            .enlaceboton {
-                font-family: verdana, arial, sans-serif;
-                font-size: 10pt;
-                font-weight: bold;
-                padding: 4px;
-                background-color: #ffffcc;
-                color: #666666;
-                text-decoration: none;
-            }
-            .enlaceboton:link,
-            .enlaceboton:visited {
-               border-top: 1px solid #cccccc;
-               border-bottom: 2px solid #666666;
-               border-left: 1px solid #cccccc;
-               border-right: 2px solid #666666;
-               text-decoration: none;
-            }
-            .enlaceboton:hover {
-                border-bottom: 1px solid #cccccc;
-                border-top: 2px solid #666666;
-                border-right: 1px solid #cccccc;
-                border-left: 2px solid #666666;
-                text-decoration: none;
-            }
-            .alertify-log-custom {
-                background: blue;
-            }
-            .enlaceboton2 {
-                font-family: verdana, arial, sans-serif;
-                font-size: 10pt;
-                padding: 4px;
-                background-color: #5882FA;
-                color: #ffffff;
-                text-decoration: none;
-            }
-            .enlaceboton2:link,
-            .enlaceboton2:visited {
-               border-top: 1px solid #cccccc;
-               border-bottom: 2px solid #666666;
-               border-left: 1px solid #cccccc;
-               border-right: 2px solid #666666;
-               color: #ffffff;
-               text-decoration: none;
-            }
-            .enlaceboton2:hover {
-                border-bottom: 1px solid #cccccc;
-                border-top: 2px solid #666666;
-                border-right: 1px solid #cccccc;
-                border-left: 2px solid #666666;
-                color: #ffffff;
-                text-decoration: none;
+            textarea:invalid {
+                background:red;
             }
             .caja_inline {
                 display: inline-block;
@@ -151,18 +102,21 @@
                     </div>
                 </div>
             </nav>
+        </div>
             @yield('content')
+            @include('rechazar')
         </div>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
         <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('alertify.js/lib/alertify.min.js')}}"></script>
         <script type="text/javascript" src="https://ptscdev.siat.sat.gob.mx/PTSC/fwidget/resources/js/m2.firmado.sat.dev.js"></script>
         <!--<script type="text/javascript" src="https://wwwuat.siat.sat.gob.mx/PTSC/fwidget/restServices/m.firmado.sat.general.js"></script>
         <script type="text/javascript" src="https://aplicaciones.sat.gob.mx/PTSC/fwidget/restServices/m.firmado.sat.general.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+        -->
         <script >
             $(document).ready(function() {
                 $('#tabla-formateada').DataTable({
@@ -189,6 +143,94 @@
                 if(cerys===''){
                     alertify.alert("<center><h3>Seleccione un Cerys.</h3></center><br>");
                     return false;
+                }
+            });
+
+            var aceptar = function(id, of, cer){
+                var token   = $('#token').val();
+                var url     = route('statusOficio');
+                var param   = {
+                                '_token': token,
+                                'id': id,
+                                'tipo': 1,
+                                'comment': '',
+                            };
+                alertify.confirm("<h3>¿Confirma la aceptación del oficio: <b>"+ of +"</b> del Cerys: <b>" + cer + "</b>?</h3><br>", function (e) {
+                    if (e) {
+                        $.ajax({
+                            url:        url,
+                            data:       param,
+                            type:       'post',
+                            dataType:   'json',
+                            success: function(result){
+                                if(result.valor == "OK"){
+                                    location.reload(true);
+                                }else if(result.valor == "ER"){
+                                    alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
+                                    return false;
+                                }else{
+                                    alertify.alert("<center><h3>Ocurrio un error al aceptar el oficio.</h3></center><br>");
+                                    return false;
+                                }
+                            }
+                        });
+                    } else {
+                        alertify.error("<h3>Se cancelo la operación</h3>");
+                        return false;
+                    }
+                });
+            }
+
+            var rechazar = function(id){
+                $('#idMotivo').val(id);
+                $('#motivo').val('');
+            }
+
+            $('#btn-cancela').click(function(event) {
+                alertify.error("<h3>Se cancelo la operación</h3>");
+            });
+
+            $('#btn-acepta').click(function(event) {
+                var motivo = $('#motivo').val();
+                var id = $('#idMotivo').val();
+                $('#rechazar').modal('toggle');
+                if(motivo === '' || motivo === null){
+                    alertify.error("<h4>El motivo no puede ser nulo.</h4>");
+                }else if(motivo.length < 10){
+                    alertify.error("<h4>El motivo es muy corto.</h4>");
+                }else{
+                    var token   = $('#token').val();
+                    var url     = route('statusOficio');
+                    var param   = {
+                                    '_token': token,
+                                    'id': id,
+                                    'tipo': 2,
+                                    'comment': motivo,
+                                };
+                    alertify.confirm("<h3>¿Confirma el rechazo del oficio?</h3><br>", function (e) {
+                        if (e) {
+                            $.ajax({
+                                url:        url,
+                                data:       param,
+                                type:       'post',
+                                dataType:   'json',
+                                success: function(result){
+                                    if(result.valor == "OK"){
+                                        location.reload(true);
+                                    }else if(result.valor == "ER"){
+                                        alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
+                                        return false;
+                                    }else{
+                                        alertify.alert("<center><h3>Ocurrio un error al rechazar el oficio.</h3></center><br>");
+                                        return false;
+                                    }
+                                }
+                            });
+                        } else {
+                            alertify.error("<h3>Se cancelo la operación</h3>");
+                            return false;
+                        }
+                    });
                 }
             });
         </script>

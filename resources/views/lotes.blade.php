@@ -43,17 +43,21 @@
                         </table>
                     @endif
                 </div>
-                @if($firmado == 0)
+                @if($firmado == 0 && $aceptado == 1)
                     <form style="display: inline" action="{{ route('firma', $oficio) }}">
-                        <button type="submit" class="btn btn-success">Firmar documento</button>
+                        <button type="submit" class="btn btn-success" title="Firmar oficio">
+                            <i class="fa fa-file-signature"> Firmar oficio</i>
+                        </button>
                     </form><br><br>
-                @else
+                @elseif ($firmado == 1 && $aceptado == 1)
                     <form style="display: inline" action="{{ route('pdf', [$oficio, 2]) }}">
-                        <button type="submit" class="btn btn-danger">Descargar</button>
+                        <button type="submit" class="btn btn-warning" title="Descargar documento">
+                            <i class="fa fa-file-download"> Descargar documento</i>
+                        </button>
                     </form><br><br>
                 @endif
             </div>
-            <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
+            <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a><br><br>
         </div>
     </div>
 </div>

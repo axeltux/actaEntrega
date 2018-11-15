@@ -14,9 +14,9 @@
                         </div>
                     @endif
 					<h2>No tienes permisos para esta sección.</h2>
-                </div>                
+                </div>
             </div>
-            <a href="{{ url()->previous() }}" class="enlaceboton2">Ir atras</a>
+            <a href="{{ url()->previous() }}" class="btn btn-primary">Ir atras</a><br><br>
         </div>
     </div>
 </div>

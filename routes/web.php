@@ -35,6 +35,8 @@ Route::get('/listaLotes/{lotes}/{oficio}/{cerys}', 'HomeController@listalotes')-
 
 Route::post('sello', 'HomeController@sello')->name('sello');
 
+Route::post('statusOficio', 'HomeController@statusOficio')->name('statusOficio');
+
 Route::get('pdf/{oficio}/{tipo}', 'PdfController@generaPDF')->name('pdf');
 
 Route::get('documento/{oficio}', 'HomeController@docFirmado')->name('documento');

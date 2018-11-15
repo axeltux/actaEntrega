@@ -108,7 +108,7 @@
 					<div id="firmado-widget-container"></div>
                 </div>
             </div>
-            <a href="{{ route('home') }}" class="enlaceboton2">Regresar</a>
+            <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a><br><br>
         </div>
     </div>
 </div>

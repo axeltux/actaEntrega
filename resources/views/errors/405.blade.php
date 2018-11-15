@@ -14,9 +14,9 @@
                         </div>
                     @endif
 					<h1>No pudimos encontar el recurso</h1>
-                </div>                
+                </div>
             </div>
-            <a href="{{ route('home') }}" class="enlaceboton2">Regresar al inicio</a>
+            <a href="{{ route('home') }}" class="btn btn-primary">Regresar al inicio</a><br><br>
         </div>
     </div>
 </div>

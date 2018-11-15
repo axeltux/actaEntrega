@@ -57,8 +57,10 @@ class HomeController extends Controller
         if (!$request->cerys) {
             return view('errors.nocerys');
         }
-        //Obtenemos los oficios del Cerys seleccionado
-        $oficios    = Oficios::where('cerys', $request->cerys)->get();
+        //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
+        $oficios    = Oficios::where('cerys', '=', $request->cerys)
+                            ->where('status','<>',2)
+                            ->get();
         $nameCerys  = Cerys::where('Numero', $request->cerys)->first();
         $cerys      = $nameCerys->Nombre;
         return view('oficios', compact('oficios', 'cerys'));
@@ -152,8 +154,9 @@ class HomeController extends Controller
         $nom        = $nameCerys->Nombre;
         $oficios    = Oficios::where('oficio',$oficio)->first();
         $firmado    = $oficios->firmado;
+        $aceptado   = $oficios->status;
         $contador   = 0;
-        return view('lotes', compact('lotes', 'contador', 'oficio', 'nom', 'firmado'));
+        return view('lotes', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
     }
 
     /**
@@ -186,8 +189,8 @@ class HomeController extends Controller
                         //Actualizamos a enviado el lote al firmar el oficio
                         $array  = explode(',', $oficios->lotes);
                         DB::table('cred_lote')
-                                    ->whereIn('NoLote', $array)
-                                    ->update(array('Estatus' => 'Entregada'));
+                                    ->whereIn('id', $array)
+                                    ->update(array('EstatusFirma' => 'Firmado'));
                     }
                 } else {
                     return response()->json([
@@ -249,5 +252,74 @@ class HomeController extends Controller
         $nameCerys  = Cerys::where('Numero', $oficios->cerys)->first();
         $cerys      = $nameCerys->Nombre;
         return view('documento', compact('oficio', 'oficios', 'cerys'));
+    }
+
+    /**
+     * [statusOficio Cambia el estatus del oficio a Aceptado o Rechazado]
+     * @param  Request $request [Recibe la solicitud por post]
+     * @return [json]           [retorna respuesta JSON]
+     */
+    public function statusOficio(Request $request){
+        //Si la sesion expiro mandarlo al login
+        if(!Auth::check()){
+            return redirect('/login');
+        }
+        if ($request->ajax()) {
+            $error = null;
+            $estado = 'Aceptado';
+            $estadoFirma = 'No firmado';
+            DB::beginTransaction();
+            try {
+                $oficios        = Oficios::where('id', $request->id)->first();
+                //Se confirma la recepción del oficio en el Cerys
+                if ($oficios) {
+                    $oficios->status = $request->tipo;
+                    if ($oficios->save()) {
+                        //Actualizamos a enviado el lote al firmar el oficio
+                        $array  = explode(',', $oficios->lotes);
+                        if ($request->tipo == 1){
+                            $estado = 'Aceptado';
+                        }else if($request->tipo == 2){
+                            $estado = 'Rechazado';
+                        }else{
+                            $estado = 'Aceptado';
+                        }
+                        DB::table('cred_lote')
+                                    ->whereIn('id', $array)
+                                    ->update(array('EstatusCerys' => $estado,
+                                                   'EstatusFirma' => $estadoFirma,
+                                                   'Comentarios'=> $request->comment
+                                            ));
+                    }
+                } else {
+                    return response()->json([
+                        'valor' => "ER",
+                        'msg'   => "No se encontro el oficio indicado.",
+                        'oficio'=> "-"
+                    ]);
+                }
+
+                DB::commit();
+                $success = true;
+            } catch (\Exception $e) {
+                $success = false;
+                $error = $e->getMessage();
+                DB::rollback();
+            }
+
+            if ($success) {
+                return response()->json([
+                    'valor' => "OK",
+                    'msg'   => "Oficio $estado",
+                    'oficio'=> $request->oficio
+                ]);
+            } else {
+                return response()->json([
+                    'valor' => "ER",
+                    'msg'   => "Error: $error",
+                    'oficio'=> "-"
+                ]);
+            }
+        }
     }
 }
