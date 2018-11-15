@@ -194,7 +194,7 @@
                 if(motivo === '' || motivo === null){
                     alertify.error("<h4>El motivo no puede ser nulo</h4>");
                 }else if(motivo.length < 10){
-                    alertify.error("<h4>La descripción es muy corta</h4>");
+                    alertify.error("<h4>La descripción del motivo es muy corta</h4>");
                 }else{
                     var token   = $('#token').val();
                     var url     = route('statusOficio');

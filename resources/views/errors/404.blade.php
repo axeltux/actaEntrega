@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-					<h1>No pudimos encontar esta página</h1>
+					<h1>No pudimos encontrar esta página</h1>
                 </div>
             </div>
             <a href="{{ route('home') }}" class="btn btn-primary">Regresar al inicio</a><br><br>
