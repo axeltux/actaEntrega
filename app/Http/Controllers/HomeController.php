@@ -122,6 +122,13 @@ class HomeController extends Controller
         $firmado    = $oficios->firmado;
         $nameCerys  = Cerys::where('Numero', $oficios->cerys)->first();
         $cerys      = $nameCerys->Nombre;
+        if(Auth::user()->username == 'Admin'){
+            return view('errors.404');
+        }else{
+            if($oficios->cerys != Auth::user()->cerys){
+                return view('errors.404');
+            }
+        }
         //En produccion cambiar a la vista efirma
         return view('efirma2', compact('oficio', 'firmado', 'cerys'));
     }
@@ -137,6 +144,11 @@ class HomeController extends Controller
         //Si la sesion expiro mandarlo al login
         if(!Auth::check()){
             return redirect('/login');
+        }
+        if(Auth::user()->username != 'Admin'){
+            if($cerys != Auth::user()->cerys){
+                return view('errors.404');
+            }
         }
         $array      = explode(",",$lotes);
         //Buscamos el o los lotes en cred_historico
@@ -247,6 +259,10 @@ class HomeController extends Controller
         }
         //Si el oficio no esta firmado envia a pagina de error
         if ($oficios->firmado == 0) {
+            return view('errors.404');
+        }
+        //si el Cerys del usuario logeado no es el mismo del documento
+        if($oficios->cerys != Auth::user()->cerys){
             return view('errors.404');
         }
         $nameCerys  = Cerys::where('Numero', $oficios->cerys)->first();

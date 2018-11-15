@@ -44,11 +44,13 @@
                     @endif
                 </div>
                 @if($firmado == 0 && $aceptado == 1)
-                    <form style="display: inline" action="{{ route('firma', $oficio) }}">
-                        <button type="submit" class="btn btn-success" title="Firmar oficio">
-                            <i class="fa fa-file-signature"> Firmar oficio</i>
-                        </button>
-                    </form><br><br>
+                    @if(Auth::user()->username !== 'Admin')
+                        <form style="display: inline" action="{{ route('firma', $oficio) }}">
+                            <button type="submit" class="btn btn-success" title="Firmar oficio">
+                                <i class="fa fa-file-signature"> Firmar oficio</i>
+                            </button>
+                        </form><br><br>
+                    @endif
                 @elseif ($firmado == 1 && $aceptado == 1)
                     <form style="display: inline" action="{{ route('pdf', [$oficio, 2]) }}">
                         <button type="submit" class="btn btn-warning" title="Descargar documento">

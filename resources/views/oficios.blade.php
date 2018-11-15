@@ -63,24 +63,27 @@
                                                         </button>
                                                     </form>
                                                 @else
-                                                    <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
-                                                        <button type="submit" class="btn btn-success" title="Firmar oficio">
-                                                            <i class="fa fa-file-signature"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if(Auth::user()->username !== 'Admin')
+                                                        <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
+                                                            <button type="submit" class="btn btn-success" title="Firmar oficio">
+                                                                <i class="fa fa-file-signature"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 @endif
                                             @else
-                                                <form style="display: inline">
-                                                    <a href="#" OnClick="aceptar({{ $element->id }}, '{{ $element->oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </form>
-
-                                                <form style="display: inline">
-                                                        <a href="#" OnClick="rechazar({{ $element->id }});"class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
-                                                            <i class="fa fa-times"></i>
+                                                @if(Auth::user()->username !== 'Admin')
+                                                    <form style="display: inline">
+                                                        <a href="#" OnClick="aceptar({{ $element->id }}, '{{ $element->oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
+                                                            <i class="fa fa-check"></i>
                                                         </a>
-                                                </form>
+                                                    </form>
+                                                    <form style="display: inline">
+                                                            <a href="#" OnClick="rechazar({{ $element->id }});"class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
+                                                                <i class="fa fa-times"></i>
+                                                            </a>
+                                                    </form>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>

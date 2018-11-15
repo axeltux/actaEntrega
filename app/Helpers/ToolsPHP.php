@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
 use App\Employees;
+use App\Cerys;
 
 class ToolsPHP {
 	/**
@@ -26,5 +27,17 @@ class ToolsPHP {
         setlocale(LC_TIME, 'spanish');
         $nombre = strftime("%B",mktime(0, 0, 0, $mes, 1, 2000));
         return $nombre;
+    }
+
+    /**
+	 * Retorna el nombre de un empleado
+	*/
+    public static function NomCerys($id){
+        $cerys = Cerys::where('Numero',$id)->first();
+        if($cerys){
+            return $cerys->Nombre;
+        }else{
+            return "- - -";
+        }
     }
 }

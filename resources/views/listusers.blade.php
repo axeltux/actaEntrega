@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default">
                 <div class="panel-heading"><b>LISTADO DE USUARIOS</b></div>
                 {{ csrf_field() }}
@@ -20,6 +20,7 @@
                                 <th>RFC</th>
                                 <th>Nombre</th>
                                 <th>E-Mail</th>
+                                <th>Cerys</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -30,11 +31,14 @@
                                     <td>{{ $element->username }}</td>
                                     <td>{{ $element->name }}</td>
                                     <td>{{ $element->email }}</td>
+                                    <td> {{ ToolsPHP::NomCerys($element->cerys) }} </td>
                                     <td>
                                         <form style="display: inline" method="POST" action="{{ route('borraUser', $element->id) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
-                                            <button type="submit" class="btn btn-danger">Borrar</button>
+                                            <button type="submit" class="btn btn-danger" title="Borrar usuario">
+                                                <i class="fa fa-trash-alt"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
