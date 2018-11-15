@@ -59,7 +59,7 @@
                                                     </form>
                                                     <form style="display: inline" action="{{ route('pdf', [$element->oficio, 2]) }}">
                                                         <button type="submit" class="btn btn-warning" title="Descargar documento">
-                                                            <i class="fa fa-file-download"></i>
+                                                            <i class="fa fa-download"></i>
                                                         </button>
                                                     </form>
                                                 @else
