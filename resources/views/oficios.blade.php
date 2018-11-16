@@ -23,12 +23,13 @@
                         <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "asc" ]]' data-page-length="10">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>#Oficio</th>
-                                    <th>#Lote</th>
-                                    <th>Creado</th>
-                                    <th>Firmado</th>
-                                    <th>Acciones</th>
+                                    <th><center>ID</center></th>
+                                    <th><center>#Oficio</center></th>
+                                    <th><center>#Lote</center></th>
+                                    <th><center>Creado</center></th>
+                                    <th><center>Estado del Oficio</center></th>
+                                    <th><center>Firmado</center></th>
+                                    <th><center>Acciones</center></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,54 +38,70 @@
                                         <td>{{ $element->id }}</td>
                                         <td>{{ $element->oficio }}</td>
                                         <td><b>{{ $element->lotes }}</b></td>
-                                        <td>{{ $element->creadoEl }}</td>
-                                        <td>@if($element->firmado)
-                                                <b>Si</b>
-                                            @else
-                                                <b>No</b>
-                                            @endif
+                                        <td>{{ ToolsPHP::FechaHumanos($element->creadoEl) }}</td>
+                                        <td>
+                                            <center>
+                                                @if($element->status)
+                                                    <b style="color:blue;">Aceptado</b>
+                                                @elseif($element->status == 2)
+                                                    <b style="color:red;">Rechazado</b>
+                                                @else
+                                                    <b>Pendiente</b>
+                                                @endif
+                                            </center>
                                         </td>
                                         <td>
-                                            <form style="display: inline" action="{{ route('listaLotes', [$element->lotes, $element->oficio, $element->cerys]) }}">
-                                                <button type="submit" class="btn btn-primary" title="Ver oficio">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
-                                            </form>
-                                            @if($element->status)
+                                            <center>
                                                 @if($element->firmado)
-                                                    <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
-                                                        <button type="submit" class="btn btn-default" title="Ver PDF">
-                                                            <i class="far fa-file-pdf"></i>
-                                                        </button>
-                                                    </form>
-                                                    <form style="display: inline" action="{{ route('pdf', [$element->oficio, 2]) }}">
-                                                        <button type="submit" class="btn btn-warning" title="Descargar documento">
-                                                            <i class="fa fa-download"></i>
-                                                        </button>
-                                                    </form>
+                                                    <b style="color:green;">Si</b>
+                                                @else
+                                                    <b style="color:red;">No</b>
+                                                @endif
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <form style="display: inline" action="{{ route('listaLotes', [$element->lotes, $element->oficio, $element->cerys]) }}">
+                                                    <button type="submit" class="btn btn-primary" title="Ver oficio">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </form>
+                                                @if($element->status)
+                                                    @if($element->firmado)
+                                                        <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
+                                                            <button type="submit" class="btn btn-default" title="Ver PDF">
+                                                                <i class="far fa-file-pdf"></i>
+                                                            </button>
+                                                        </form>
+                                                        <form style="display: inline" action="{{ route('pdf', [$element->oficio, 2]) }}">
+                                                            <button type="submit" class="btn btn-warning" title="Descargar documento">
+                                                                <i class="fa fa-download"></i>
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        @if(Auth::user()->username !== 'Admin')
+                                                            <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
+                                                                <button type="submit" class="btn btn-success" title="Firmar oficio">
+                                                                    <i class="fa fa-file-signature"></i>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    @endif
                                                 @else
                                                     @if(Auth::user()->username !== 'Admin')
-                                                        <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
-                                                            <button type="submit" class="btn btn-success" title="Firmar oficio">
-                                                                <i class="fa fa-file-signature"></i>
-                                                            </button>
+                                                        <form style="display: inline">
+                                                            <a href="#" OnClick="aceptar({{ $element->id }}, '{{ $element->oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </form>
+                                                        <form style="display: inline">
+                                                                <a href="#" OnClick="rechazar({{ $element->id }});"class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
+                                                                    <i class="fa fa-times"></i>
+                                                                </a>
                                                         </form>
                                                     @endif
                                                 @endif
-                                            @else
-                                                @if(Auth::user()->username !== 'Admin')
-                                                    <form style="display: inline">
-                                                        <a href="#" OnClick="aceptar({{ $element->id }}, '{{ $element->oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
-                                                            <i class="fa fa-check"></i>
-                                                        </a>
-                                                    </form>
-                                                    <form style="display: inline">
-                                                            <a href="#" OnClick="rechazar({{ $element->id }});"class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
-                                                                <i class="fa fa-times"></i>
-                                                            </a>
-                                                    </form>
-                                                @endif
-                                            @endif
+                                            </center>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -20,12 +20,12 @@
                         <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "asc" ]]' data-page-length="10">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>#Empleado</th>
-                                    <th>Nombre</th>
-                                    <th>Unidad</th>
-                                    <th>Cerys</th>
-                                    <th>Lote</th>
+                                    <th><center>ID</center></th>
+                                    <th><center>#Empleado</center></th>
+                                    <th><center>Nombre</center></th>
+                                    <th><center>Unidad</center></th>
+                                    <th><center>Cerys</center></th>
+                                    <th><center>Lote</center></th>
                                 </tr>
                             </thead>
                             <tbody>

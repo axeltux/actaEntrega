@@ -17,12 +17,12 @@
                     <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "desc" ]]' data-page-length="10">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>RFC</th>
-                                <th>Nombre</th>
-                                <th>E-Mail</th>
-                                <th>Cerys</th>
-                                <th>Acciones</th>
+                                <th><center>ID</center></th>
+                                <th><center>RFC</center></th>
+                                <th><center>Nombre</center></th>
+                                <th><center>E-Mail</center></th>
+                                <th><center>Cerys</center></th>
+                                <th><center>Acciones</center></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,13 +34,15 @@
                                     <td>{{ $element->email }}</td>
                                     <td> {{ ToolsPHP::NomCerys($element->cerys) }} </td>
                                     <td>
-                                        <form style="display: inline" method="POST" action="{{ route('borraUser', $element->id) }}">
-                                            {!! csrf_field() !!}
-                                            {!! method_field('DELETE') !!}
-                                            <button type="submit" class="btn btn-danger" title="Borrar usuario">
-                                                <i class="fa fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                        <center>
+                                            <form style="display: inline" method="POST" action="{{ route('borraUser', $element->id) }}">
+                                                {!! csrf_field() !!}
+                                                {!! method_field('DELETE') !!}
+                                                <button type="submit" class="btn btn-danger" title="Borrar usuario">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </center>
                                     </td>
                                 </tr>
                             @endforeach

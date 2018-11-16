@@ -40,4 +40,19 @@ class ToolsPHP {
             return "- - -";
         }
     }
+
+    /**
+     * [FechaHumanos convierte el numero de mes a texto]
+     * @param [string] $fecha [Retorna la fecha en formato dd MM YY hh:mm PM/AM]
+     */
+    public static function FechaHumanos($fecha){
+        setlocale(LC_TIME, 'spanish');
+        $mes    = date("m", strtotime($fecha));
+        $dia    = date("d", strtotime($fecha));
+        $annio  = date("Y", strtotime($fecha));
+        $hora   = date("g:i a", strtotime($fecha));
+        $mesEsp = ucwords(strftime("%B",mktime(0, 0, 0, $mes, 1, 2000)));
+        $feEsp  = "$dia de $mesEsp del $annio, $hora";
+        return $feEsp;
+    }
 }
