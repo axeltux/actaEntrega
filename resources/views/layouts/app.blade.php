@@ -101,6 +101,7 @@
                 </div>
             </nav>
         </div>
+
         @yield('content')
         @include('rechazar')
 

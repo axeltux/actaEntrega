@@ -6,7 +6,6 @@
     <link href="{{ asset('css/pdf.css') }}" rel="stylesheet" media="all">
   </head>
   <body>
- 
     <main>
       <div id="details" class="clearfix">
         <div id="invoice">
@@ -30,7 +29,6 @@
             <td class="unit">{{ $data['price'] }}</td>
             <td class="total">{{ $data['total'] }} </td>
           </tr>
- 
         </tbody>
         <tfoot>
           <tr>
