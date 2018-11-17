@@ -22,7 +22,17 @@ class PdfController extends Controller
         }
         //Obtenemos los lotes
         $array      = explode(",",$oficios->lotes);
-        $lotes      = CredEmpleado::whereIn('Lote', $array)->get();
+        //Buscamos el o los lotes en cred_historico
+        $historico  = DB::table('cred_historico')
+                                ->select('NumeroEmpleado','UnidadAdmin','Lote','Cerys')
+                                ->whereIn('Lote',$array);
+        //Creamos la union con la tabla de cred_empleado
+        $lotes      = DB::table('cred_empleado')
+                                ->select('NumeroEmpleado','UnidadAdmin','Lote','Cerys')
+                                ->whereIn('Lote',$array)
+                                ->union($historico)
+                                ->orderBy('Lote')
+                                ->get();
         //Obtemos la cantidad de tarjetas
         $totalLotes = count($lotes);
         //Datos generales para el llenado del documento
