@@ -15,6 +15,7 @@
         <link href="{{ asset('DataTables/datatables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('fonts/fontawesome/css/all.css') }}" rel="stylesheet" />
         <link href="{{ asset('alertify.js/themes/alertify.core.css') }}" rel="stylesheet" />
+        <link href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.css') }}" rel="stylesheet" />
         <!-- <link href="{{ asset('alertify.js/themes/alertify.default.css') }}" rel="stylesheet" id="toggleCSS"/> -->
         <link href="{{ asset('alertify.js/themes/alertify.bootstrap.css') }}" rel="stylesheet" />
         <style type="text/css">
@@ -109,6 +110,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
         <script src="{{ asset('js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui-1.12.1/jquery-ui.js') }}"></script>
         <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('alertify.js/lib/alertify.min.js')}}"></script>
         <script type="text/javascript" src="https://ptscdev.siat.sat.gob.mx/PTSC/fwidget/resources/js/m2.firmado.sat.dev.js"></script>
@@ -122,7 +124,7 @@
                     "language": {
                         "url": '{{ asset('js/Spanish.json') }}'
                     },
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                     "pagingType": "full_numbers"
                 });
 
@@ -152,6 +154,7 @@
                                 'id': id,
                                 'tipo': 1,
                                 'comment': '',
+                                'oficio': of
                             };
                 alertify.confirm("<center><h3>¿Confirma la aceptación del oficio: <b>"+ of +"</b> del Cerys: <b>" + cer + "</b>?</h3></center><br>", function (e) {
                     if (e) {
@@ -184,6 +187,15 @@
                 $('#motivo').val('');
             }
 
+            var cerrarModal = function(){
+                //ocultamos el modal
+                $("#rechazar").modal('hide');
+                //eliminamos la clase del body para poder hacer scroll
+                $('body').removeClass('modal-open');
+                //eliminamos el backdrop del modal
+                $('.modal-backdrop').remove();
+            }
+
             $('#btn-cancela').click(function(event) {
                 alertify.error("<h3>Se cancelo la operación</h3>");
             });
@@ -191,11 +203,16 @@
             $('#btn-acepta').click(function(event) {
                 var motivo = $('#motivo').val();
                 var id = $('#idMotivo').val();
-                $('#rechazar').modal('toggle');
                 if(motivo === '' || motivo === null){
+                    $('#motivo').focus();
+                    $('#motivo').effect('highlight', {color:'#ff0000'}, 6000);
                     alertify.error("<h4>El motivo no puede ser nulo</h4>");
+                    return false;
                 }else if(motivo.length < 10){
+                    $('#motivo').focus();
+                    $('#motivo').effect('highlight', {color:'#ff0000'}, 6000);
                     alertify.error("<h4>La descripción del motivo es muy corta</h4>");
+                    return false;
                 }else{
                     var token   = $('#token').val();
                     var url     = route('statusOficio');
@@ -212,6 +229,9 @@
                                 data:       param,
                                 type:       'post',
                                 dataType:   'json',
+                                beforeSend: function () {
+                                    cerrarModal();
+                                },
                                 success: function(result){
                                     if(result.valor == "OK"){
                                         location.reload(true);
@@ -225,6 +245,7 @@
                                 }
                             });
                         } else {
+                            cerrarModal();
                             alertify.error("<h3>Se cancelo la operación</h3>");
                             return false;
                         }

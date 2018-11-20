@@ -164,7 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
-        Illuminate\Html\HtmlServiceProvider::class,
+        //Illuminate\Html\HtmlServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -20,7 +20,7 @@
                     @if(count($oficios)<1)
                         <h2>No existen oficios para este Cerys.</h2>
                     @else
-                        <table id="tabla-formateada" width="100%" class="table table-striped table-bordered" data-order='[[ 0, "asc" ]]' data-page-length="10">
+                        <table id="tabla-formateada" width="100%" class="display" data-order='[[ 1, "desc" ]]' data-page-length="5">
                             <thead>
                                 <tr>
                                     <th><center>ID</center></th>

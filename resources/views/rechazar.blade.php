@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input id="btn-acepta" type="submit" class="btn btn-primary" value="Guardar" data-dismiss="modal">
+                <input id="btn-acepta" type="submit" class="btn btn-primary" value="Guardar">
                 <input id="btn-cancela" type="submit" class="btn btn-danger" value="Cancelar" data-dismiss="modal">
             </div>
         </div>

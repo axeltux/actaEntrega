@@ -60,6 +60,7 @@ class HomeController extends Controller
         //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
         $oficios    = Oficios::where('cerys', '=', $request->cerys)
                             ->where('status','<>',2)
+                            ->orderBy('id', 'DESC')
                             ->get();
         $nameCerys  = Cerys::where('Numero', $request->cerys)->first();
         $cerys      = $nameCerys->Nombre;
@@ -311,7 +312,8 @@ class HomeController extends Controller
                     return response()->json([
                         'valor' => "ER",
                         'msg'   => "No se encontro el oficio indicado.",
-                        'oficio'=> "-"
+                        'oficio'=> "-",
+                        'cerys' => Auth::user()->cerys
                     ]);
                 }
 
@@ -327,13 +329,15 @@ class HomeController extends Controller
                 return response()->json([
                     'valor' => "OK",
                     'msg'   => "Oficio $estado",
-                    'oficio'=> $request->oficio
+                    'oficio'=> $request->oficio,
+                    'cerys' => Auth::user()->cerys
                 ]);
             } else {
                 return response()->json([
                     'valor' => "ER",
                     'msg'   => "Error: $error",
-                    'oficio'=> "-"
+                    'oficio'=> "-",
+                    'cerys' => Auth::user()->cerys
                 ]);
             }
         }
