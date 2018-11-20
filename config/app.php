@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
+        Illuminate\Html\HtmlServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -230,6 +231,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'ToolsPHP' => App\Helpers\ToolsPHP::class,
+        'Form' => Illuminate\Html\FormFacade::class,
+        'Html' => Illuminate\Html\HtmlFacade::class,
     ],
 
 ];
