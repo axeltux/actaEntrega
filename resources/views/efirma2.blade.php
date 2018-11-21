@@ -82,9 +82,47 @@
                     @endif
                     <br>
                     <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-primary" id="btn-send">
-                        Enviar
-                    </button>
+                    <div class="form-group">
+                        <label for="cer" class="col-md-4 control-label">Certificado (cer)</label>
+                        <div>
+                            <div class="col-md-6">
+                                <input id="cer" type="text" class="form-control" name="cer"  value="archivo.cer" required autofocus>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="#" class="btn btn-primary" id="buscar1">Buscar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="llave" class="col-md-4 control-label">Clave privada (key)</label>
+                        <div>
+                            <div class="col-md-6">
+                                <input id="llave" type="text" class="form-control" name="llave" value="archivo.key" required autofocus>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="#" class="btn btn-primary" id="buscar2">Buscar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-4 control-label">Contraseña de clave privada</label>
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control" name="password" value="123456" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rfc" class="col-md-4 control-label">RFC</label>
+                        <div class="col-md-6">
+                            <input id="rfc" type="text" class="form-control" name="rfc" value="{{ Auth::user()->username }}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary" id="btn-send">
+                                Enviar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a><br><br>
