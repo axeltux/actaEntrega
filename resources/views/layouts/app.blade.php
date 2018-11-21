@@ -183,13 +183,13 @@
                         return false;
                     }
                 });
-            }
+            };
 
             //Envia valores a ventana modal
             let rechazar = function(id){
                 $('#idMotivo').val(id);
                 $('#motivo').val('');
-            }
+            };
 
             //Funcion para cerrar modal, recibe nombre del modal
             let cerrarModal = function(nameModal){
@@ -200,7 +200,7 @@
                 $('body').removeClass('modal-open');
                 //eliminamos el backdrop del modal
                 $('.modal-backdrop').remove();
-            }
+            };
 
             //Envia mensaje de cancelacion de operacion
             $('#btn-cancela').click(function(event) {

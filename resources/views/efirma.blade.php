@@ -5,7 +5,7 @@
 @routes
 
 <script>
-    var timer = setInterval(function() {
+    let timer = setInterval(function() {
                 console.log('No se ha cargado el Widget...');
                 if (document.getElementById('btnEnviarForm') !== null) {
                     console.log('Se cargó el Widget de Firmado');
@@ -17,12 +17,12 @@
 
     function btnEnviarFIELOnClick() {
         try {
-            var hoy = new Date();
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
-            var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
-            var token = $('#token').val();
-            var rfcSession = '{{ Auth::user()->username }}';
-            var cadenaOriginalEntrada = rfcSession+'|'+token+'|'+fecha+'|'+hora;
+            let hoy = new Date();
+            let fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+            let hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+            let token = $('#token').val();
+            let rfcSession = '{{ Auth::user()->username }}';
+            let cadenaOriginalEntrada = rfcSession+'|'+token+'|'+fecha+'|'+hora;
             //Método que genera el firmado
             generaFirmaIndividual([{cadenaOriginal:cadenaOriginalEntrada}],
                 {validarRFCSession:rfcSession},
@@ -37,14 +37,14 @@
                             console.log(resultado[0].firmaDigital);
                             console.log(resultado[0].cadenaOriginalGenerada);
                             //Llamada a la pagina que buscara los acuses para envio
-                            var firma = resultado[0].firmaDigital;
-                            var sello = resultado[0].cadenaOriginalGenerada;
-                            var nombre = '{{ Auth::user()->name }}';
-                            var oficio = '{{ $oficio }}';
-                            var firmado = '{{ $firmado }}';
-                            var cerys = '{{ $cerys }}';
-                            var url = route('sello');
-                            var param = {
+                            let firma = resultado[0].firmaDigital;
+                            let sello = resultado[0].cadenaOriginalGenerada;
+                            let nombre = '{{ Auth::user()->name }}';
+                            let oficio = '{{ $oficio }}';
+                            let firmado = '{{ $firmado }}';
+                            let cerys = '{{ $cerys }}';
+                            let url = route('sello');
+                            let param = {
                                           '_token': token,
                                           'nombre': nombre,
                                           'firma':  firma,

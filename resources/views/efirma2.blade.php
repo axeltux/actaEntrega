@@ -5,7 +5,7 @@
 @routes
 
 <script>
-    var timer = setInterval(function() {
+    let timer = setInterval(function() {
                 if (document.getElementById('btn-send') !== null) {
                     console.log('Se cargó el Widget de Firmado');
                     //Añadirle un evento
@@ -15,20 +15,20 @@
             }, 200);
 
     function btnEnviarFIELOnClick() {
-        var hoy = new Date();
-        var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
-        var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
-        var token = $('#token').val();
-        var rfcSession = '{{ Auth::user()->username }}';
-        var cadenaOriginalEntrada = rfcSession +'|'+ token +'|'+ fecha +'|'+ hora;
-        var firma = '11111111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAZZZZZZZZZZ==';
-        var sello = '||'+ rfcSession +'|20001000000300007558|1529087682109|'+ cadenaOriginalEntrada +'||';
-        var nombre = '{{ Auth::user()->name }}';
-        var oficio = '{{ $oficio }}';
-        var firmado = '{{ $firmado }}';
-        var cerys = '{{ $cerys }}';
-        var url = route('sello');
-        var param = {
+        let hoy = new Date();
+        let fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+        let hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+        let token = $('#token').val();
+        let rfcSession = '{{ Auth::user()->username }}';
+        let cadenaOriginalEntrada = rfcSession +'|'+ token +'|'+ fecha +'|'+ hora;
+        let firma = '11111111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAZZZZZZZZZZ==';
+        let sello = '||'+ rfcSession +'|20001000000300007558|1529087682109|'+ cadenaOriginalEntrada +'||';
+        let nombre = '{{ Auth::user()->name }}';
+        let oficio = '{{ $oficio }}';
+        let firmado = '{{ $firmado }}';
+        let cerys = '{{ $cerys }}';
+        let url = route('sello');
+        let param = {
                       '_token': token,
                       'nombre': nombre,
                       'firma':  firma,
