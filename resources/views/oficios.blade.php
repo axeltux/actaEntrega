@@ -62,7 +62,7 @@
                                         <td>
                                             <center>
                                                 <form style="display: inline" action="{{ route('listaLotes', [$element->lotes, $element->oficio, $element->cerys]) }}">
-                                                    <button type="submit" class="btn btn-primary" title="Ver oficio">
+                                                    <button type="submit" class="btn btn-primary" title="Ver contenido del oficio">
                                                         <i class="fa fa-eye"></i>
                                                     </button>
                                                 </form>

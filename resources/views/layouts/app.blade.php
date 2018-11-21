@@ -118,6 +118,7 @@
         <script type="text/javascript" src="https://aplicaciones.sat.gob.mx/PTSC/fwidget/restServices/m.firmado.sat.general.js"></script>
         -->
         <script >
+            //Carga Datatable
             $(document).ready(function() {
                 $('#tabla-formateada').DataTable({
                     stateSave: true,
@@ -138,18 +139,20 @@
                 cancel : "Cancelar"
             } });
 
+            //Valida si se selecciono un cerys para ver los oficios
             $('#btn-cerys').click(function(event) {
-                var cerys = $('select[id=cerys]').val();
+                let cerys = $('select[id=cerys]').val();
                 if(cerys===''){
                     alertify.alert("<center><h3>Seleccione un Cerys.</h3></center><br>");
                     return false;
                 }
             });
 
-            var aceptar = function(id, of, cer){
-                var token   = $('#token').val();
-                var url     = route('statusOficio');
-                var param   = {
+            //Procesa la solicitud de aceptación de oficio en el Cerys
+            let aceptar = function(id, of, cer){
+                let token   = $('#token').val();
+                let url     = route('statusOficio');
+                let param   = {
                                 '_token': token,
                                 'id': id,
                                 'tipo': 1,
@@ -182,27 +185,32 @@
                 });
             }
 
-            var rechazar = function(id){
+            //Envia valores a ventana modal
+            let rechazar = function(id){
                 $('#idMotivo').val(id);
                 $('#motivo').val('');
             }
 
-            var cerrarModal = function(){
+            //Funcion para cerrar modal, recibe nombre del modal
+            let cerrarModal = function(nameModal){
+                let nombre = '#' + nameModal;
                 //ocultamos el modal
-                $("#rechazar").modal('hide');
+                $(nombre).modal('hide');
                 //eliminamos la clase del body para poder hacer scroll
                 $('body').removeClass('modal-open');
                 //eliminamos el backdrop del modal
                 $('.modal-backdrop').remove();
             }
 
+            //Envia mensaje de cancelacion de operacion
             $('#btn-cancela').click(function(event) {
                 alertify.error("<h3>Se cancelo la operación</h3>");
             });
 
+            //Evento click del boton aceptar del modal de rechazar oficio
             $('#btn-acepta').click(function(event) {
-                var motivo = $('#motivo').val();
-                var id = $('#idMotivo').val();
+                let motivo = $('#motivo').val();
+                let id = $('#idMotivo').val();
                 if(motivo === '' || motivo === null){
                     $('#motivo').focus();
                     $('#motivo').effect('highlight', {color:'#ff0000'}, 6000);
@@ -214,9 +222,9 @@
                     alertify.error("<h4>La descripción del motivo es muy corta</h4>");
                     return false;
                 }else{
-                    var token   = $('#token').val();
-                    var url     = route('statusOficio');
-                    var param   = {
+                    let token   = $('#token').val();
+                    let url     = route('statusOficio');
+                    let param   = {
                                     '_token': token,
                                     'id': id,
                                     'tipo': 2,
@@ -230,7 +238,7 @@
                                 type:       'post',
                                 dataType:   'json',
                                 beforeSend: function () {
-                                    cerrarModal();
+                                    cerrarModal('rechazar');
                                 },
                                 success: function(result){
                                     if(result.valor == "OK"){
@@ -245,7 +253,7 @@
                                 }
                             });
                         } else {
-                            cerrarModal();
+                            cerrarModal('rechazar');
                             alertify.error("<h3>Se cancelo la operación</h3>");
                             return false;
                         }
