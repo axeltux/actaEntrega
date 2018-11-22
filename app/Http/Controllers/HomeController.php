@@ -198,7 +198,7 @@ class HomeController extends Controller
                 $fechaString    = strtotime($request->fecha . " " . $request->hora);
                 $firmadoEl      = date('d-m-Y H:i:s', $fechaString);
                 $oficios        = Oficios::where('oficio', $request->oficio)->first();
-                
+
                 if($oficios->firmado == 1){
                     return response()->json([
                         'valor' => "ER",
