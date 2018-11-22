@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default">
-                <div class="panel-heading"><b>LISTADO DE LOTES DEL OFICIO: {{ $oficio }} || Cerys: {{ $nom }}</b></div>
+                <div class="panel-heading"><b>LISTADO DE LOTES DEL OFICIO: {{ $oficio }} || CERYS: {{ $nom }}</b></div>
                 {{ csrf_field() }}
                 <div class="panel-body">
                     @if (session('status'))

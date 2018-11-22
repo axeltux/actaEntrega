@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading"><b>LISTADO DE OFICIOS Cerys: </b> <strong>{{ $cerys }}</strong></div>
+                <div class="panel-heading"><b>LISTADO DE OFICIOS CERYS: </b> <strong>{{ $cerys }}</strong></div>
                 {{ csrf_field() }}
                 <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="panel-body">
