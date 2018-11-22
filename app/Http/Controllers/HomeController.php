@@ -59,7 +59,6 @@ class HomeController extends Controller
         }
         //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
         $oficios    = Oficios::where('cerys', '=', $request->cerys)
-                            ->where('status','<>',2)
                             ->orderBy('id', 'DESC')
                             ->get();
         $nameCerys  = Cerys::where('Numero', $request->cerys)->first();
@@ -123,12 +122,22 @@ class HomeController extends Controller
         $firmado    = $oficios->firmado;
         $nameCerys  = Cerys::where('Numero', $oficios->cerys)->first();
         $cerys      = $nameCerys->Nombre;
+        //Si el usuario admin intenta firmar un documento
         if(Auth::user()->username == 'Admin'){
             return view('errors.404');
         }else{
+            //Si el cerys del usuario logueado es diferente del cerys del oficio
             if($oficios->cerys != Auth::user()->cerys){
                 return view('errors.404');
             }
+        }
+        //Si intentan firmar un oficio rechazado
+        if($oficios->status == 2){
+            return view('errors.404');
+        }
+        //Si el documento ya ha sido firmado y quieren volver a firmarlo
+        if($oficios->firmado == 1){
+            return view('errors.yafirmado');
         }
         //En produccion cambiar a la vista efirma
         return view('efirma2', compact('oficio', 'firmado', 'cerys'));
@@ -189,6 +198,14 @@ class HomeController extends Controller
                 $fechaString    = strtotime($request->fecha . " " . $request->hora);
                 $firmadoEl      = date('d-m-Y H:i:s', $fechaString);
                 $oficios        = Oficios::where('oficio', $request->oficio)->first();
+                
+                if($oficios->firmado == 1){
+                    return response()->json([
+                        'valor' => "ER",
+                        'msg'   => "El documento ya fue firmado.",
+                        'oficio'=> "-"
+                    ]);
+                }
 
                 //Guardamos la firma electronica en oficios
                 if ($oficios) {

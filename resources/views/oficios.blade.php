@@ -41,7 +41,7 @@
                                         <td>{{ ToolsPHP::FechaHumanos($element->creadoEl) }}</td>
                                         <td>
                                             <center>
-                                                @if($element->status)
+                                                @if($element->status == 1)
                                                     <b style="color:blue;">Aceptado</b>
                                                 @elseif($element->status == 2)
                                                     <b style="color:red;">Rechazado</b>
@@ -66,8 +66,8 @@
                                                         <i class="fa fa-eye"></i>
                                                     </button>
                                                 </form>
-                                                @if($element->status)
-                                                    @if($element->firmado)
+                                                @if($element->status == 1)
+                                                    @if($element->firmado == 1)
                                                         <form style="display: inline" action="{{ route('pdf', [$element->oficio, 1]) }}" target="_blank">
                                                             <button type="submit" class="btn btn-default" title="Ver PDF">
                                                                 <i class="far fa-file-pdf"></i>
@@ -79,7 +79,7 @@
                                                             </button>
                                                         </form>
                                                     @else
-                                                        @if(Auth::user()->username !== 'Admin')
+                                                        @if(Auth::user()->username !== 'Admin' && $element->firmado == 0 && $element->status == 1)
                                                             <form style="display: inline" action="{{ route('firma', $element->oficio) }}">
                                                                 <button type="submit" class="btn btn-success" title="Firmar oficio">
                                                                     <i class="fa fa-file-signature"></i>
@@ -88,7 +88,7 @@
                                                         @endif
                                                     @endif
                                                 @else
-                                                    @if(Auth::user()->username !== 'Admin')
+                                                    @if(Auth::user()->username !== 'Admin' && $element->status == 0)
                                                         <form style="display: inline">
                                                             <a href="#" OnClick="aceptar({{ $element->id }}, '{{ $element->oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
                                                                 <i class="fa fa-check"></i>

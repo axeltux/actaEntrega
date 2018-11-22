@@ -167,9 +167,9 @@
                             type:       'post',
                             dataType:   'json',
                             success: function(result){
-                                if(result.valor == "OK"){
+                                if(result.valor === "OK"){
                                     location.reload(true);
-                                }else if(result.valor == "ER"){
+                                }else if(result.valor === "ER"){
                                     alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
                                     return false;
                                 }else{
@@ -241,9 +241,9 @@
                                     cerrarModal('rechazar');
                                 },
                                 success: function(result){
-                                    if(result.valor == "OK"){
+                                    if(result.valor === "OK"){
                                         location.reload(true);
-                                    }else if(result.valor == "ER"){
+                                    }else if(result.valor === "ER"){
                                         alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
                                         return false;
                                     }else{
