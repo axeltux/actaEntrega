@@ -14,7 +14,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <h1>El documento ya ha sido firmado</h1>
+                        <h1>El documento ya ha sido firmado.</h1>
                     </div>
                 </div>
                 <a href="{{ route('home') }}" class="btn btn-primary">Regresar al inicio</a><br><br>
