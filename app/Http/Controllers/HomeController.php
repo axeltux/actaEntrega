@@ -8,6 +8,7 @@ use App\Cerys;
 use App\User;
 use App\Oficios;
 use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     /**
@@ -18,6 +19,7 @@ class HomeController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
+    
     /**
      * [oficios Obtiene el listado de oficios pendientes por ser aceptados]
      * @param  Request $request [Recibe el numero del cerys]
