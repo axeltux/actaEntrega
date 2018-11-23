@@ -14,11 +14,11 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::post('/oficios', 'HomeController@oficios')->name('oficios');
+Route::get('/home', 'HomeController@oficios')->name('home');
 
 Route::get('/listusers', 'HomeController@listaUsuarios')->name('listusers');
 

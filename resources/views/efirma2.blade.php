@@ -74,13 +74,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><b>Firma digital SAT</b></div>
                 {{ csrf_field() }}
+                <center>
+                    <div><h3>e.firma</h3></div>
+                </center>
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
-                    <br>
                     <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <label for="cer" class="col-md-4 control-label">Certificado (cer)</label>

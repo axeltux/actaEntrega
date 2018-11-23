@@ -7,12 +7,7 @@ use Auth;
 use App\Cerys;
 use App\User;
 use App\Oficios;
-use App\Lotes;
-use App\CredEmpleado;
-use App\CredHistorico;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**
@@ -23,46 +18,32 @@ class HomeController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //Si la sesion expiro mandarlo al login
-        if(!Auth::check()){
-            return redirect('/login');
-        }
-        //Obtenemos los datos del cerys
-        if (Auth::user()->username === 'Admin') {
-            $cerys = Cerys::all();
-        }else{
-            $cerys  = Cerys::where('Numero', Auth::user()->cerys)->get();
-        }
-        return view('home', compact('cerys'));
-    }
-
     /**
      * [oficios Obtiene el listado de oficios pendientes por ser aceptados]
      * @param  Request $request [Recibe el numero del cerys]
      * @return [array]          [Retorna arreglo con los numeros de oficios del cerys]
      */
-    public function oficios(Request $request) {
+    public function oficios() {
         //Si la sesion expiro mandarlo al login
         if(!Auth::check()){
             return redirect('/login');
         }
         //Si no se recibe el cerys redirigir a error
-        if (!$request->cerys) {
+        if (Auth::user()->cerys === null || Auth::user()->cerys === '') {
             return view('errors.nocerys');
         }
-        //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
-        $oficios    = Oficios::where('cerys', '=', $request->cerys)
-                            ->orderBy('id', 'DESC')
-                            ->get();
-        $nameCerys  = Cerys::where('Numero', $request->cerys)->first();
-        $cerys      = $nameCerys->Nombre;
+        if(Auth::user()->username === 'Admin'){
+            //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
+            $oficios    = Oficios::all()->sortBy('id');
+            $cerys      = "Todos";
+        }else{
+            //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
+            $oficios    = Oficios::where('cerys', '=', Auth::user()->cerys)
+                                ->orderBy('id', 'DESC')
+                                ->get();
+            $nameCerys  = Cerys::where('Numero', Auth::user()->cerys)->first();
+            $cerys      = $nameCerys->Nombre;
+        }
         return view('oficios', compact('oficios', 'cerys'));
     }
 
@@ -163,11 +144,11 @@ class HomeController extends Controller
         $array      = explode(",",$lotes);
         //Buscamos el o los lotes en cred_historico
         $historico  = DB::table('cred_historico')
-                                ->select('NumeroEmpleado','UnidadAdmin','Lote','Cerys')
+                                ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys')
                                 ->whereIn('Lote',$array);
         //Creamos la union con la tabla de cred_empleado
         $lotes      = DB::table('cred_empleado')
-                                ->select('NumeroEmpleado','UnidadAdmin','Lote','Cerys')
+                                ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys')
                                 ->whereIn('Lote',$array)
                                 ->union($historico)
                                 ->orderBy('Lote')

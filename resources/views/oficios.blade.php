@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default">
                 <div class="panel-heading"><b>LISTADO DE OFICIOS CERYS: </b> <strong>{{ $cerys }}</strong></div>
                 {{ csrf_field() }}
@@ -25,6 +25,7 @@
                                 <tr>
                                     <th><center>ID</center></th>
                                     <th><center>#Oficio</center></th>
+                                    <th><center>Cerys</center></th>
                                     <th><center>#Lote</center></th>
                                     <th><center>Creado</center></th>
                                     <th><center>Estado del Oficio</center></th>
@@ -37,6 +38,7 @@
                                     <tr>
                                         <td>{{ $element->id }}</td>
                                         <td>{{ $element->oficio }}</td>
+                                        <td> {{ ToolsPHP::NomCerys($element->cerys) }} </td>
                                         <td><b>{{ $element->lotes }}</b></td>
                                         <td>{{ ToolsPHP::FechaHumanos($element->creadoEl) }}</td>
                                         <td>
@@ -110,7 +112,6 @@
                     @endif
                 </div>
             </div>
-            <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a><br><br>
         </div>
     </div>
 </div>

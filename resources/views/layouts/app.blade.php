@@ -16,7 +16,6 @@
         <link href="{{ asset('fonts/fontawesome/css/all.css') }}" rel="stylesheet" />
         <link href="{{ asset('alertify.js/themes/alertify.core.css') }}" rel="stylesheet" />
         <link href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.css') }}" rel="stylesheet" />
-        <!-- <link href="{{ asset('alertify.js/themes/alertify.default.css') }}" rel="stylesheet" id="toggleCSS"/> -->
         <link href="{{ asset('alertify.js/themes/alertify.bootstrap.css') }}" rel="stylesheet" />
         <style type="text/css">
             .active{
@@ -203,12 +202,12 @@
             };
 
             //Envia mensaje de cancelacion de operacion
-            $('#btn-cancela').click(function(event) {
+            $('#btn-cancela').click(function() {
                 alertify.error("<h3>Se cancelo la operación</h3>");
             });
 
             //Evento click del boton aceptar del modal de rechazar oficio
-            $('#btn-acepta').click(function(event) {
+            $('#btn-acepta').click(function() {
                 let motivo = $('#motivo').val();
                 let id = $('#idMotivo').val();
                 if(motivo === '' || motivo === null){
