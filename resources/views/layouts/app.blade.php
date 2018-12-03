@@ -12,26 +12,21 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('DataTables/datatables.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('DataTables/DataTables-1.10.17/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
         <link href="{{ asset('fonts/fontawesome/css/all.css') }}" rel="stylesheet" />
         <link href="{{ asset('alertify.js/themes/alertify.core.css') }}" rel="stylesheet" />
         <link href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.css') }}" rel="stylesheet" />
         <link href="{{ asset('alertify.js/themes/alertify.bootstrap.css') }}" rel="stylesheet" />
-        <style type="text/css">
-            .active{
-                text-decoration: none;
-                color: green;
+        <style>
+            .CentraColumna {
+                text-align: center;
             }
-            .error{
-                color: red;
-                font-size: 12px;
+            .content {
+                text-align: center;
             }
-            /*textarea:invalid {
-                background:red;
-            }*/
-            .caja_inline {
-                display: inline-block;
-                width: 360px;
+
+            .title {
+                font-size: 84px;
             }
         </style>
     </head>
@@ -103,162 +98,22 @@
         </div>
 
         @yield('content')
-        @include('rechazar')
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
         <script src="{{ asset('js/bootstrap.js') }}"></script>
         <script src="{{ asset('js/jquery-ui-1.12.1/jquery-ui.js') }}"></script>
-        <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
+        <!-- DataTables-->
+        <script src="{{ asset('DataTables/DataTables-1.10.17/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('DataTables/DataTables-1.10.17/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('alertify.js/lib/alertify.min.js')}}"></script>
         <script type="text/javascript" src="https://ptscdev.siat.sat.gob.mx/PTSC/fwidget/resources/js/m2.firmado.sat.dev.js"></script>
         <!--<script type="text/javascript" src="https://wwwuat.siat.sat.gob.mx/PTSC/fwidget/restServices/m.firmado.sat.general.js"></script>
         <script type="text/javascript" src="https://aplicaciones.sat.gob.mx/PTSC/fwidget/restServices/m.firmado.sat.general.js"></script>
         -->
-        <script >
-            //Carga Datatable
-            $(document).ready(function() {
-                $('#tabla-formateada').DataTable({
-                    stateSave: true,
-                    "language": {
-                        "url": '{{ asset('js/Spanish.json') }}'
-                    },
-                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                    "pagingType": "full_numbers"
-                });
 
-                $.ajaxSetup({
-                    headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')}
-                });
-            });
+        @extends('layouts.scripts')
 
-            alertify.set({ labels: {
-                ok     : "Aceptar",
-                cancel : "Cancelar"
-            } });
-
-            //Valida si se selecciono un cerys para ver los oficios
-            $('#btn-cerys').click(function(event) {
-                let cerys = $('select[id=cerys]').val();
-                if(cerys===''){
-                    alertify.alert("<center><h3>Seleccione un Cerys.</h3></center><br>");
-                    return false;
-                }
-            });
-
-            //Procesa la solicitud de aceptación de oficio en el Cerys
-            let aceptar = function(id, of, cer){
-                let token   = $('#token').val();
-                let url     = route('statusOficio');
-                let param   = {
-                                '_token': token,
-                                'id': id,
-                                'tipo': 1,
-                                'comment': '',
-                                'oficio': of
-                            };
-                alertify.confirm("<center><h3>¿Confirma la aceptación del oficio: <b>"+ of +"</b> del Cerys: <b>" + cer + "</b>?</h3></center><br>", function (e) {
-                    if (e) {
-                        $.ajax({
-                            url:        url,
-                            data:       param,
-                            type:       'post',
-                            dataType:   'json',
-                            success: function(result){
-                                if(result.valor === "OK"){
-                                    location.reload(true);
-                                }else if(result.valor === "ER"){
-                                    alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
-                                    return false;
-                                }else{
-                                    alertify.alert("<center><h3>Ocurrio un error al aceptar el oficio.</h3></center><br>");
-                                    return false;
-                                }
-                            }
-                        });
-                    } else {
-                        alertify.error("<h3>Se cancelo la operación</h3>");
-                        return false;
-                    }
-                });
-            };
-
-            //Envia valores a ventana modal
-            let rechazar = function(id){
-                $('#idMotivo').val(id);
-                $('#motivo').val('');
-            };
-
-            //Funcion para cerrar modal, recibe nombre del modal
-            let cerrarModal = function(nameModal){
-                let nombre = '#' + nameModal;
-                //ocultamos el modal
-                $(nombre).modal('hide');
-                //eliminamos la clase del body para poder hacer scroll
-                $('body').removeClass('modal-open');
-                //eliminamos el backdrop del modal
-                $('.modal-backdrop').remove();
-            };
-
-            //Envia mensaje de cancelacion de operacion
-            $('#btn-cancela').click(function() {
-                alertify.error("<h3>Se cancelo la operación</h3>");
-            });
-
-            //Evento click del boton aceptar del modal de rechazar oficio
-            $('#btn-acepta').click(function() {
-                let motivo = $('#motivo').val();
-                let id = $('#idMotivo').val();
-                if(motivo === '' || motivo === null){
-                    $('#motivo').focus();
-                    $('#motivo').effect('highlight', {color:'#ff0000'}, 6000);
-                    alertify.error("<h4>El motivo no puede ser nulo</h4>");
-                    return false;
-                }else if(motivo.length < 10){
-                    $('#motivo').focus();
-                    $('#motivo').effect('highlight', {color:'#ff0000'}, 6000);
-                    alertify.error("<h4>La descripción del motivo es muy corta</h4>");
-                    return false;
-                }else{
-                    let token   = $('#token').val();
-                    let url     = route('statusOficio');
-                    let param   = {
-                                    '_token': token,
-                                    'id': id,
-                                    'tipo': 2,
-                                    'comment': motivo,
-                                };
-                    alertify.confirm("<center><h3>¿Confirma el rechazo del oficio?</h3></center><br>", function (e) {
-                        if (e) {
-                            $.ajax({
-                                url:        url,
-                                data:       param,
-                                type:       'post',
-                                dataType:   'json',
-                                beforeSend: function () {
-                                    cerrarModal('rechazar');
-                                },
-                                success: function(result){
-                                    if(result.valor === "OK"){
-                                        location.reload(true);
-                                    }else if(result.valor === "ER"){
-                                        alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
-                                        return false;
-                                    }else{
-                                        alertify.alert("<center><h3>Ocurrio un error al rechazar el oficio.</h3></center><br>");
-                                        return false;
-                                    }
-                                }
-                            });
-                        } else {
-                            cerrarModal('rechazar');
-                            alertify.error("<h3>Se cancelo la operación</h3>");
-                            return false;
-                        }
-                    });
-                }
-            });
-        </script>
     </body>
 </html>

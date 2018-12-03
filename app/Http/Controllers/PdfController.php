@@ -25,10 +25,12 @@ class PdfController extends Controller
         //Buscamos el o los lotes en cred_historico
         $historico  = DB::table('cred_historico')
                                 ->select('NumeroEmpleado','UnidadAdmin','Lote','Cerys')
+                                ->where('Firmado',1)
                                 ->whereIn('Lote',$array);
         //Creamos la union con la tabla de cred_empleado
         $lotes      = DB::table('cred_empleado')
                                 ->select('NumeroEmpleado','UnidadAdmin','Lote','Cerys')
+                                ->where('Firmado',1)
                                 ->whereIn('Lote',$array)
                                 ->union($historico)
                                 ->orderBy('Lote')

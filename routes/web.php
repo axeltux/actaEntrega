@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
@@ -24,11 +24,23 @@ Route::get('/listusers', 'HomeController@listaUsuarios')->name('listusers');
 
 Route::delete('listusers/{id}', ['as'=>'borraUser', 'uses'=>'HomeController@destroy']);
 
+Route::post('borraUsuario', 'HomeController@borraUsuario')->name('borraUsuario');
+
 Route::get('firma/{oficio}', 'HomeController@efirma')->name('firma');
+
+Route::get('editUser/{id}', 'HomeController@editUser')->name('editUser');
+
+Route::post('updateUser/{id}', 'HomeController@updateUser')->name('updateUser');
+
+Route::get('obtenerDatosEmpleado/{id}', 'HomeController@obtenerDatosEmpleado')->name('obtenerDatosEmpleado');
 
 Route::get('/listaLotes/{lotes}/{oficio}/{cerys}', 'HomeController@listalotes')->name('listaLotes');
 
+Route::get('/firmaLotes/{lotes}/{oficio}/{cerys}', 'HomeController@firmaLotes')->name('firmaLotes');
+
 Route::post('sello', 'HomeController@sello')->name('sello');
+
+Route::post('guardaEstado', 'HomeController@guardaEstado')->name('guardaEstado');
 
 Route::post('statusOficio', 'HomeController@statusOficio')->name('statusOficio');
 

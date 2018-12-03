@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Motivo;
 use Illuminate\Support\Facades\DB;
 use App\Employees;
 use App\Cerys;
@@ -54,5 +55,14 @@ class ToolsPHP {
         $mesEsp = ucwords(strftime("%B",mktime(0, 0, 0, $mes, 1, 2000)));
         $feEsp  = "$dia de $mesEsp del $annio, $hora";
         return $feEsp;
+    }
+    
+    public static function nombreMotivo($id){
+        $motivo = Motivo::where('Id',"$id")->first();
+        if($motivo){
+            return $motivo->Nombre;
+        }else{
+            return '';
+        }
     }
 }

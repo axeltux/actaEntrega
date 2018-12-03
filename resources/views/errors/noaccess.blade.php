@@ -14,7 +14,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-					<h2>No tienes permisos para esta sección.</h2>
+                    <div class="content">
+                        <div class="title m-b-md">
+                            Error de permisos
+                        </div>
+                        <h3>No tienes permisos para esta sección.</h3>
+                    </div>
                 </div>
             </div>
             <a href="{{ url()->previous() }}" class="btn btn-primary">Ir atras</a><br><br>

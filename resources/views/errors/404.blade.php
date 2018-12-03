@@ -14,7 +14,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-					<h1>No pudimos encontrar esta página</h1>
+                    <div class="content">
+                        <div class="title m-b-md">
+                            Error 404
+                        </div>
+                        <h3>No pudimos encontrar la página solicitada.</h3>
+                    </div>
                 </div>
             </div>
             <a href="{{ route('home') }}" class="btn btn-primary">Regresar al inicio</a><br><br>

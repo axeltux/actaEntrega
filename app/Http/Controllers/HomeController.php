@@ -6,7 +6,10 @@ use DB;
 use Auth;
 use App\Cerys;
 use App\User;
+use App\Estado;
+use App\Motivo;
 use App\Oficios;
+use App\CredEmpleado;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -19,7 +22,7 @@ class HomeController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-    
+
     /**
      * [oficios Obtiene el listado de oficios pendientes por ser aceptados]
      * @param  Request $request [Recibe el numero del cerys]
@@ -46,7 +49,7 @@ class HomeController extends Controller
             $nameCerys  = Cerys::where('Numero', Auth::user()->cerys)->first();
             $cerys      = $nameCerys->Nombre;
         }
-        return view('oficios', compact('oficios', 'cerys'));
+        return view('oficios.index', compact('oficios', 'cerys'));
     }
 
     /**
@@ -62,32 +65,81 @@ class HomeController extends Controller
         if (Auth::user()->username != 'Admin') {
             return view('errors.noaccess');
         }
-        //Obtenemos los usuarios registrados
-        $usuario   = User::all()->sortBy("id");;
-        $usuarios  = [];
-        //Recorremos el arreglo obtenido para quitar Admin
-        foreach ($usuario as $data) {
-            if($data->username != 'Admin'){
-                $usuarios[] = $data;
-            }
-        }
-        return view('listusers', compact('usuarios'));
+        return view('users.index');
     }
-
+    
     /**
-     * [destroy Metodo para borra usuarios del sistema]
-     * @param  [int] $id  [Recibe el id del usuario]
-     * @return [none]     [Retorna vista de lista de usuarios]
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy($id) {
+    public function borraUsuario(Request $request) {
         //Si la sesion expiro mandarlo al login
         if(!Auth::check()){
             return redirect('/login');
         }
-        //Si no se encuentra el id mandar error 400
-        User::findOrFail($id)->delete();
-        //Redireccionar a la vista index
-        return redirect()->route('listusers');
+        if ($request->ajax()) {
+            $error = null;
+            DB::beginTransaction();
+            try {
+                $usuario = User::where('id', $request->id)->first();
+                //Guardamos la firma electronica en oficios
+                if ($usuario) {
+                    $usuario->delete();
+                } else {
+                    return response()->json([
+                        'valor' => "ER",
+                        'msg'   => "No se encontro el usuario indicado.",
+                    ]);
+                }
+            
+                DB::commit();
+                $success = true;
+            } catch (\Exception $e) {
+                $success = false;
+                $error = $e->getMessage();
+                DB::rollback();
+            }
+        
+            if ($success) {
+                return response()->json([
+                    'valor' => "OK",
+                    'msg'   => "Usuario eliminado."
+                ]);
+            } else {
+                return response()->json([
+                    'valor' => "ER",
+                    'msg'   => "Error: $error",
+                ]);
+            }
+        }
+    }
+    
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editUser($id){
+        $user = User::findOrFail($id);
+        $cerys = Cerys::all();
+        return view('users.editar', compact('user','cerys'));
+    }
+    
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function updateUser(Request $request, $id){
+        $user = User::findOrFail($id);
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'cerys' => 'required|integer',
+        ]);
+        $input = $request->all();
+        $user->fill($input)->save();
+        return view('users.index');
     }
 
     /**
@@ -123,7 +175,7 @@ class HomeController extends Controller
             return view('errors.yafirmado');
         }
         //En produccion cambiar a la vista efirma
-        return view('efirma2', compact('oficio', 'firmado', 'cerys'));
+        return view('firma.efirma2', compact('oficio', 'firmado', 'cerys'));
     }
 
     /**
@@ -143,14 +195,14 @@ class HomeController extends Controller
                 return view('errors.404');
             }
         }
-        $array      = explode(",",$lotes);
+        $array      = explode(",", $lotes);
         //Buscamos el o los lotes en cred_historico
         $historico  = DB::table('cred_historico')
-                                ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys')
+                                ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys','Firmado')
                                 ->whereIn('Lote',$array);
         //Creamos la union con la tabla de cred_empleado
         $lotes      = DB::table('cred_empleado')
-                                ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys')
+                                ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys','Firmado')
                                 ->whereIn('Lote',$array)
                                 ->union($historico)
                                 ->orderBy('Lote')
@@ -161,9 +213,111 @@ class HomeController extends Controller
         $firmado    = $oficios->firmado;
         $aceptado   = $oficios->status;
         $contador   = 0;
-        return view('lotes', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
+        return view('lotes.index', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
     }
-
+    
+    /**
+     * @param $lotes
+     * @param $oficio
+     * @param $cerys
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    public function firmaLotes($lotes, $oficio, $cerys) {
+        //Si la sesion expiro mandarlo al login
+        if(!Auth::check()){
+            return redirect('/login');
+        }
+        if(Auth::user()->username != 'Admin'){
+            if($cerys != Auth::user()->cerys){
+                return view('errors.404');
+            }
+        }
+        $array      = explode(",",$lotes);
+        $listaLotes = $lotes;
+        $lotes      = CredEmpleado::whereIn('lote',$array)->get();
+        $nameCerys  = Cerys::where('Numero',$cerys)->first();
+        $nom        = $nameCerys->Nombre;
+        $oficios    = Oficios::where('oficio',$oficio)->first();
+        $firmado    = $oficios->firmado;
+        $aceptado   = $oficios->status;
+        $estado     = Estado::all();
+        $motivo     = Motivo::where('Estado', '<>', 'No aplica')->get();
+        return view('firma.firmaLotes', compact('lotes', 'listaLotes',
+            'contador', 'oficio', 'nom', 'firmado', 'aceptado', 'cerys',
+            'estado', 'motivo'));
+    }
+    
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function obtenerDatosEmpleado(Request $request){
+        if ($request->ajax()) {
+            $datos = CredEmpleado::where('Id',$request->id)->first();
+            
+            if ($datos) {
+                return response()->json([
+                    'valor' => "OK",
+                    'numEmp' => $datos->NumeroEmpleado,
+                    'nombre' => $datos->Nombre . " ". $datos->APaterno . " ".  $datos->AMaterno,
+                    'estado' => $datos->Acepta,
+                    'motivo' => $datos->MotivoRechazo
+                    ]);
+            } else {
+                return response()->json([
+                    'valor' => "ER",
+                    'msg' => "No se encontro el empleado indicado.",
+                    'oficio' => "-"
+                ]);
+            }
+        }
+    }
+    
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function guardaEstado(Request $request){
+        if ($request->ajax()) {
+            $error = null;
+            DB::beginTransaction();
+            try {
+                $credenciales = CredEmpleado::where('Id', $request->id)->first();
+                //Guardamos la firma electronica en oficios
+                if ($credenciales) {
+                    DB::table('cred_empleado')
+                        ->where('Id', $request->id)
+                        ->update(array('Acepta' => $request->estado,
+                                       'MotivoRechazo' => $request->motivo));
+                } else {
+                    return response()->json([
+                        'valor' => "ER",
+                        'msg'   => "No se encontro la credencial.",
+                        'oficio'=> "-"
+                    ]);
+                }
+                DB::commit();
+                $success = true;
+            } catch (\Exception $e) {
+                $success = false;
+                $error = $e->getMessage();
+                DB::rollback();
+            }
+    
+            if ($success) {
+                return response()->json([
+                    'valor' => "OK",
+                    'msg'   => "Cambio efectuado.",
+                ]);
+            } else {
+                return response()->json([
+                    'valor' => "ER",
+                    'msg'   => "Error: $error",
+                ]);
+            }
+        }
+    }
+    
     /**
      * [sello Guarda firma digital en base de datos]
      * @param  Request $request [Recibe la solicitud por post]
@@ -204,6 +358,12 @@ class HomeController extends Controller
                         DB::table('cred_lote')
                                     ->whereIn('NoLote', $array)
                                     ->update(array('EstatusFirma' => 'Firmado'));
+                        //Actualizamos las credenciales al firmase
+                        DB::table('cred_empleado')
+                            ->whereIn('Lote', $array)
+                            ->where('Acepta', 1)
+                            ->update(array('Firmado' => 1,
+                                           'Usuario' => Auth::user()->username));
                     }
                 } else {
                     return response()->json([
@@ -268,7 +428,7 @@ class HomeController extends Controller
         }
         $nameCerys  = Cerys::where('Numero', $oficios->cerys)->first();
         $cerys      = $nameCerys->Nombre;
-        return view('documento', compact('oficio', 'oficios', 'cerys'));
+        return view('firma.documento', compact('oficio', 'oficios', 'cerys'));
     }
 
     /**
