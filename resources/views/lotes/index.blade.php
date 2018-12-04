@@ -25,7 +25,6 @@
                                     <th style="text-align: center">Nombre</th>
                                     <th style="text-align: center">Unidad</th>
                                     <th style="text-align: center">Cerys</th>
-                                    <th style="text-align: center">Estado</th>
                                     <th style="text-align: center">Lote</th>
                                 </tr>
                             </thead>
@@ -37,13 +36,6 @@
                                         <td> {{ ToolsPHP::NomEmpleados($element->NumeroEmpleado) }} </td>
                                         <td> {{ $element->UnidadAdmin }} </td>
                                         <td> {{ $element->Cerys }} </td>
-                                        <td>
-                                            @if($element->Acepta == 1)
-                                                <b style="color:blue;">Aceptado</b>
-                                            @else
-                                                <b style="color:red;">Rechazado</b>
-                                            @endif
-                                        </td>
                                         <td> Lote-{{ $element->Lote }} </td>
                                     </tr>
                                 @endforeach

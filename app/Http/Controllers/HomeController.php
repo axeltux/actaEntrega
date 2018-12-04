@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
-use App\Models\Cerys;
 use App\User;
+use App\Models\Cerys;
 use App\Models\Estado;
 use App\Models\Motivo;
 use App\Models\Oficios;
@@ -199,10 +199,12 @@ class HomeController extends Controller
         //Buscamos el o los lotes en cred_historico
         $historico  = DB::table('cred_historico')
                                 ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys','Firmado')
+                                ->where('Acepta','=',1)
                                 ->whereIn('Lote',$array);
         //Creamos la union con la tabla de cred_empleado
         $lotes      = DB::table('cred_empleado')
                                 ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys','Firmado')
+                                ->where('Acepta','=',1)
                                 ->whereIn('Lote',$array)
                                 ->union($historico)
                                 ->orderBy('Lote')
@@ -361,7 +363,7 @@ class HomeController extends Controller
                         //Actualizamos las credenciales al firmase
                         DB::table('cred_empleado')
                             ->whereIn('Lote', $array)
-                            ->where('Acepta', 1)
+                            ->where('Acepta','=',1)
                             ->update(array('Firmado' => 1,
                                            'Usuario' => Auth::user()->username));
                     }
