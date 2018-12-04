@@ -47,11 +47,13 @@
                                         </td>
                                         <td> {{ ToolsPHP::nombreMotivo($element->MotivoRechazo) }} </td>
                                         <td>
-                                            {!! Form::open(['route' => ['firmaLotes', $listaLotes, $oficio, $cerys], 'method' => 'GET', 'style' => "display: inline"]) !!}
-                                                <a href="javascript:;" OnClick="editarCredencial({{ $element->Id }});" class="btn btn-danger" title="Modificar estado" data-toggle="modal" data-target="#editarRechazar">
-                                                    <i class="fa fa-edit"></i> Editar estado
-                                                </a>
-                                            {!! Form::close() !!}
+                                            @if($firmado != 1)
+                                                {!! Form::open(['route' => ['firmaLotes', $listaLotes, $oficio, $cerys], 'method' => 'GET', 'style' => "display: inline"]) !!}
+                                                    <a href="javascript:;" OnClick="editarCredencial({{ $element->Id }});" class="btn btn-danger" title="Modificar estado" data-toggle="modal" data-target="#editarRechazar">
+                                                        <i class="fa fa-edit"></i> Editar estado
+                                                    </a>
+                                                {!! Form::close() !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
