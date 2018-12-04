@@ -185,7 +185,9 @@ class HomeController extends Controller
      * @param  [int] $cerys     [El numero del cerys que esta en el oficio]
      * @return [varios]         [Retorna arreglos y variables]
      */
-    public function listalotes($lotes, $oficio, $cerys) {
+    public function listalotes($oficio) {
+        $oficiotbl  = Oficios::where('oficio', $oficio)->first();
+        $cerys      = $oficiotbl->cerys;
         //Si la sesion expiro mandarlo al login
         if(!Auth::check()){
             return redirect('/login');
@@ -195,7 +197,7 @@ class HomeController extends Controller
                 return view('errors.404');
             }
         }
-        $array      = explode(",", $lotes);
+        $array      = explode(",", $oficiotbl->lotes);
         //Buscamos el o los lotes en cred_historico
         $historico  = DB::table('cred_historico')
                                 ->select('id','NumeroEmpleado','UnidadAdmin','Lote','Acepta','Cerys','Firmado')
@@ -211,9 +213,8 @@ class HomeController extends Controller
                                 ->get();
         $nameCerys  = Cerys::where('Numero',$cerys)->first();
         $nom        = $nameCerys->Nombre;
-        $oficios    = Oficios::where('oficio',$oficio)->first();
-        $firmado    = $oficios->firmado;
-        $aceptado   = $oficios->status;
+        $firmado    = $oficiotbl->firmado;
+        $aceptado   = $oficiotbl->status;
         $contador   = 0;
         return view('lotes.index', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
     }
@@ -224,7 +225,9 @@ class HomeController extends Controller
      * @param $cerys
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function firmaLotes($lotes, $oficio, $cerys) {
+    public function firmaLotes($oficio) {
+        $oficiotbl  = Oficios::where('oficio', $oficio)->first();
+        $cerys      = $oficiotbl->cerys;
         //Si la sesion expiro mandarlo al login
         if(!Auth::check()){
             return redirect('/login');
@@ -234,14 +237,13 @@ class HomeController extends Controller
                 return view('errors.404');
             }
         }
-        $array      = explode(",",$lotes);
-        $listaLotes = $lotes;
+        $array      = explode(",",$oficiotbl->lotes);
+        $listaLotes = $oficiotbl->lotes;
         $lotes      = CredEmpleado::whereIn('lote',$array)->get();
         $nameCerys  = Cerys::where('Numero',$cerys)->first();
         $nom        = $nameCerys->Nombre;
-        $oficios    = Oficios::where('oficio',$oficio)->first();
-        $firmado    = $oficios->firmado;
-        $aceptado   = $oficios->status;
+        $firmado    = $oficiotbl->firmado;
+        $aceptado   = $oficiotbl->status;
         $estado     = Estado::all();
         $motivo     = Motivo::where('Estado', '<>', 'No aplica')->get();
         return view('firma.firmaLotes', compact('lotes', 'listaLotes',

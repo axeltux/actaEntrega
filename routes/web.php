@@ -20,7 +20,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@oficios')->name('home');
 
-Route::get('/listusers', 'HomeController@listaUsuarios')->name('listusers');
+Route::get('listusers', 'HomeController@listaUsuarios')->name('listusers');
 
 Route::delete('listusers/{id}', ['as'=>'borraUser', 'uses'=>'HomeController@destroy']);
 
@@ -34,9 +34,9 @@ Route::post('updateUser/{id}', 'HomeController@updateUser')->name('updateUser');
 
 Route::get('obtenerDatosEmpleado/{id}', 'HomeController@obtenerDatosEmpleado')->name('obtenerDatosEmpleado');
 
-Route::get('/listaLotes/{lotes}/{oficio}/{cerys}', 'HomeController@listalotes')->name('listaLotes');
+Route::get('listaLotes/{oficio}', 'HomeController@listalotes')->name('listaLotes');
 
-Route::get('/firmaLotes/{lotes}/{oficio}/{cerys}', 'HomeController@firmaLotes')->name('firmaLotes');
+Route::get('firmaLotes/{oficio}', 'HomeController@firmaLotes')->name('firmaLotes');
 
 Route::post('sello', 'HomeController@sello')->name('sello');
 

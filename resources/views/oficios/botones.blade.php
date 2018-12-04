@@ -1,4 +1,4 @@
-{!! Form::open(['route' => ['listaLotes', $lotes, $oficio, $numCerys], 'method' => 'GET', 'style' => "display: inline"]) !!}
+{!! Form::open(['route' => ['listaLotes', $oficio], 'method' => 'GET', 'style' => "display: inline"]) !!}
     <button type="submit" class="btn btn-primary" title="Ver contenido del oficio">
         <i class="fa fa-eye"></i>
     </button>
@@ -17,7 +17,7 @@
         {!! Form::close() !!}
     @else
         @if($usuario !== 'Admin' && $firmado === 'No' && $estado === 'Aceptado')
-            {!! Form::open(['route' => ['firmaLotes', $lotes, $oficio, $numCerys], 'method' => 'GET', 'style' => "display: inline"]) !!}
+            {!! Form::open(['route' => ['firmaLotes', $oficio], 'method' => 'GET', 'style' => "display: inline"]) !!}
                 <button type="submit" class="btn btn-success" title="Firmar oficio">
                     <i class="fa fa-file-signature"></i>
                 </button>
