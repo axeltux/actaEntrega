@@ -1,13 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CredEmpleado extends Model
+class Employees extends Model
 {
+  	//Definimos a que base de datos se conecta
+  	protected $connection = 'cayas';
     //Definimos a que tabla apunta el modelo
-    protected $table = 'cred_empleado';
+    protected $table = 'employees';
     protected $fillable = [
 	      //
 	  ];

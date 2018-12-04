@@ -181,9 +181,6 @@
         let id      = $("#idCred").val();
         let estado  = $("#estadoCred").val();
         let motivo  = $("#motivoCred").val();
-        let lote    = $("#loteCred").val();
-        let oficio  = $("#oficioCred").val();
-        let cerys   = $("#cerysCred").val();
         if(estado == 0 && (motivo == '' || motivo == null)){
             $('#motivoCred').focus();
             $('#motivoCred').effect('highlight', {color:'#ff0000'}, 6000);

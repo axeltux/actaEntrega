@@ -2,10 +2,9 @@
 
 namespace App\Helpers;
 
-use App\Motivo;
-use Illuminate\Support\Facades\DB;
-use App\Employees;
-use App\Cerys;
+use App\Models\Motivo;
+use App\Models\Employees;
+use App\Models\Cerys;
 
 class ToolsPHP {
 	/**

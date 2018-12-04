@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
-use App\Cerys;
+use App\Models\Cerys;
 use App\User;
-use App\Estado;
-use App\Motivo;
-use App\Oficios;
-use App\CredEmpleado;
+use App\Models\Estado;
+use App\Models\Motivo;
+use App\Models\Oficios;
+use App\Models\CredEmpleado;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

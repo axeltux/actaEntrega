@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CredHistorico extends Model
+class Lotes extends Model
 {
-     //Definimos a que tabla apunta el modelo
-    protected $table = 'cred_historico';
+	//Definimos a que tabla apunta el modelo
+    protected $table = 'cred_lote';
     protected $fillable = [
 	      //
 	  ];

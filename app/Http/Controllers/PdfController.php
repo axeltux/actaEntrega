@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 use DB;
 use Auth;
-use App\Cerys;
-use App\User;
-use App\Oficios;
-use App\CredEmpleado;
-use Illuminate\Http\Request;
+use App\Models\Cerys;
+use App\Models\Oficios;
 
 class PdfController extends Controller
 {

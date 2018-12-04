@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lotes extends Model
+class CredEmpleado extends Model
 {
-	//Definimos a que tabla apunta el modelo
-    protected $table = 'cred_lote';
+    //Definimos a que tabla apunta el modelo
+    protected $table = 'cred_empleado';
     protected $fillable = [
 	      //
 	  ];
