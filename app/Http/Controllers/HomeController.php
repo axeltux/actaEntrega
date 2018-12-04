@@ -67,7 +67,7 @@ class HomeController extends Controller
         }
         return view('users.index');
     }
-    
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -91,7 +91,7 @@ class HomeController extends Controller
                         'msg'   => "No se encontro el usuario indicado.",
                     ]);
                 }
-            
+
                 DB::commit();
                 $success = true;
             } catch (\Exception $e) {
@@ -99,7 +99,7 @@ class HomeController extends Controller
                 $error = $e->getMessage();
                 DB::rollback();
             }
-        
+
             if ($success) {
                 return response()->json([
                     'valor' => "OK",
@@ -113,7 +113,7 @@ class HomeController extends Controller
             }
         }
     }
-    
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -123,7 +123,7 @@ class HomeController extends Controller
         $cerys = Cerys::all();
         return view('users.editar', compact('user','cerys'));
     }
-    
+
     /**
      * @param Request $request
      * @param $id
@@ -215,7 +215,7 @@ class HomeController extends Controller
         $contador   = 0;
         return view('lotes.index', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
     }
-    
+
     /**
      * @param $lotes
      * @param $oficio
@@ -246,7 +246,7 @@ class HomeController extends Controller
             'contador', 'oficio', 'nom', 'firmado', 'aceptado', 'cerys',
             'estado', 'motivo'));
     }
-    
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -254,7 +254,7 @@ class HomeController extends Controller
     public function obtenerDatosEmpleado(Request $request){
         if ($request->ajax()) {
             $datos = CredEmpleado::where('Id',$request->id)->first();
-            
+
             if ($datos) {
                 return response()->json([
                     'valor' => "OK",
@@ -272,7 +272,7 @@ class HomeController extends Controller
             }
         }
     }
-    
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -303,7 +303,7 @@ class HomeController extends Controller
                 $error = $e->getMessage();
                 DB::rollback();
             }
-    
+
             if ($success) {
                 return response()->json([
                     'valor' => "OK",
@@ -317,7 +317,7 @@ class HomeController extends Controller
             }
         }
     }
-    
+
     /**
      * [sello Guarda firma digital en base de datos]
      * @param  Request $request [Recibe la solicitud por post]
