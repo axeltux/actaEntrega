@@ -177,13 +177,10 @@ class HomeController extends Controller
         //En produccion cambiar a la vista efirma
         return view('firma.efirma2', compact('oficio', 'firmado', 'cerys'));
     }
-
+    
     /**
-     * [listalotes Lista los empleatos del o los lotes del oficio]
-     * @param  [string] $lotes  [Lista de los lotes del oficio]
-     * @param  [string] $oficio [Oficio que se esta validando]
-     * @param  [int] $cerys     [El numero del cerys que esta en el oficio]
-     * @return [varios]         [Retorna arreglos y variables]
+     * @param $oficio
+     * @return view lotes.index
      */
     public function listalotes($oficio) {
         $oficiotbl  = Oficios::where('oficio', $oficio)->first();
@@ -218,12 +215,10 @@ class HomeController extends Controller
         $contador   = 0;
         return view('lotes.index', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
     }
-
+    
     /**
-     * @param $lotes
      * @param $oficio
-     * @param $cerys
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @return view firma.firmaLotes
      */
     public function firmaLotes($oficio) {
         $oficiotbl  = Oficios::where('oficio', $oficio)->first();
