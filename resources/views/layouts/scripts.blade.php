@@ -23,7 +23,7 @@
             "language": {
                 "url": '{{ asset('js/Spanish.json') }}'
             },
-            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
             "pagingType": "full_numbers"
         });
 
@@ -43,7 +43,7 @@
             "language": {
                 "url": '{{ asset('js/Spanish.json') }}'
             },
-            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
             "pagingType": "full_numbers"
         });
 
@@ -53,7 +53,7 @@
             "language": {
                 "url": '{{ asset('js/Spanish.json') }}'
             },
-            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
             "pagingType": "full_numbers"
         });
 
@@ -63,7 +63,7 @@
             "language": {
                 "url": '{{ asset('js/Spanish.json') }}'
             },
-            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
             "pagingType": "full_numbers"
         });
 
@@ -75,7 +75,7 @@
     });
 
     //Valida si se selecciono un cerys para ver los oficios
-    $('#btn-cerys').click(function(event) {
+    $('#btn-cerys').click(function() {
         let cerys = $('select[id=cerys]').val();
         if(cerys===''){
             alertify.alert("<center><h3>Seleccione un Cerys.</h3></center><br>");
@@ -84,12 +84,12 @@
     });
 
     //Función para actualizar DataTable
-    function refreshTable() {
+    let refreshTable = function(){
         $('.dataTable').each(function() {
             let dt = $(this).dataTable();
             dt.fnDraw();
         })
-    }
+    };
 
     //Procesa la solicitud de aceptación de oficio en el Cerys
     let aceptar = function(id, of, cer){
@@ -112,10 +112,11 @@
                     success: function(result){
                         if(result.valor === "OK"){
                             let url  = 'home';
-                            $.get(url, function(response){
+                            $.get(url, function(){
                                 refreshTable();
                             }).fail(function(){
                                 alertify.alert("<center><h3>Ocurrio un error al rechazar el oficio.</h3></center><br>");
+                                return false;
                             });
                         }else if(result.valor === "ER"){
                             alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");
@@ -173,6 +174,7 @@
             }
         }).fail(function(){
             alertify.alert("<center><h3>Ocurrio un error.</h3></center><br>");
+            return false;
         });
     };
 
@@ -281,6 +283,7 @@
                                     refreshTable();
                                 }).fail(function(){
                                     alertify.alert("<center><h3>Ocurrio un error al rechazar el oficio.</h3></center><br>");
+                                    return false;
                                 });
                             }else if(result.valor === "ER"){
                                 alertify.alert("<center><h3>"+result.msg+"</h3></center><br>");

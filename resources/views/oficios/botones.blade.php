@@ -27,12 +27,12 @@
 @else
     @if($usuario !== 'Admin' && $estado === 'Pendiente')
         {!! Form::open(['route' => ['home'], 'method' => 'GET', 'style' => "display: inline"]) !!}
-            <a href="javascript:;" OnClick="aceptar({{ $id }}, '{{ $oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
+            <a href="javascript:" OnClick="aceptar('{{ $id }}', '{{ $oficio }}', '{{ $cerys }}');" class="btn btn-success" title="Aceptar oficio">
                 <i class="fa fa-check"></i>
             </a>
         {!! Form::close() !!}
         {!! Form::open(['route' => ['home'], 'method' => 'GET', 'style' => "display: inline"]) !!}
-            <a href="javascript:;" OnClick="rechazar({{ $id }});" class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
+            <a href="#" OnClick="rechazar({{ $id }});" class="btn btn-danger" title="Rechazar oficio" data-toggle="modal" data-target="#rechazar">
                 <i class="fa fa-times"></i>
             </a>
         {!! Form::close() !!}

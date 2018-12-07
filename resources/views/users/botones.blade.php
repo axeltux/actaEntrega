@@ -6,7 +6,7 @@
 {!! Form::close() !!}
 <!-- Boton borrar usuario -->
 {!! Form::open(['route' => ['listusers'], 'method' => 'GET', 'style' => "display: inline"]) !!}
-    <a href="javascript:;" OnClick="borrarUsuario({{ $id }});" class="btn btn-danger" title="Borrar usuario">
+    <a href="javascript:" OnClick="borrarUsuario({{ $id }});" class="btn btn-danger" title="Borrar usuario">
         <i class="fa fa-trash-alt"></i>
     </a>
 {!! Form::close() !!}

@@ -70,7 +70,7 @@ class HomeController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\JsonResponse
      */
     public function borraUsuario(Request $request) {
         //Si la sesion expiro mandarlo al login
@@ -177,7 +177,7 @@ class HomeController extends Controller
         //En produccion cambiar a la vista efirma
         return view('firma.efirma2', compact('oficio', 'firmado', 'cerys'));
     }
-    
+
     /**
      * @param $oficio
      * @return view lotes.index
@@ -215,7 +215,7 @@ class HomeController extends Controller
         $contador   = 0;
         return view('lotes.index', compact('lotes', 'contador', 'oficio', 'nom', 'firmado', 'aceptado'));
     }
-    
+
     /**
      * @param $oficio
      * @return view firma.firmaLotes

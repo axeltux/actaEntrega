@@ -49,7 +49,7 @@
                                         <td>
                                             @if($firmado != 1)
                                                 {!! Form::open(['route' => ['firmaLotes', $listaLotes, $oficio, $cerys], 'method' => 'GET', 'style' => "display: inline"]) !!}
-                                                    <a href="javascript:;" OnClick="editarCredencial({{ $element->Id }});" class="btn btn-danger" title="Modificar estado" data-toggle="modal" data-target="#editarRechazar">
+                                                    <a href="#" OnClick="editarCredencial({{ $element->Id }});" class="btn btn-danger" title="Modificar estado" data-toggle="modal" data-target="#editarRechazar">
                                                         <i class="fa fa-edit"></i> Editar estado
                                                     </a>
                                                 {!! Form::close() !!}
