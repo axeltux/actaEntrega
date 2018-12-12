@@ -18,7 +18,7 @@ Route::get('/oficios/{username}', function($username){
     }
     $user = User::where('username', $username)->first();
     //Si es el usuario Admin buscar los oficios de todos los cerys.
-    if($user->username === 'Admin'){
+    if($user->username === 'Admin' || $user->username === 'Drs'){
         //Obtenemos los oficios del Cerys pendientes o aceptados, 2 indica rechazado
         $oficios    = DB::select("SELECT oficio.id, oficio.oficio, cerys.Nombre AS cerys, oficio.lotes,
                                     CONVERT(varchar,oficio.creadoEl,9) AS creado,
@@ -33,12 +33,12 @@ Route::get('/oficios/{username}', function($username){
                                                 WHEN oficio.firmado=1 THEN 'Si'
                                                 ELSE 'N/A'
                                             END,
-                                    usuario = '$username', estadoOficio=oficio.status, firmaOficio=oficio.firmado,
+                                    usuario = ?, estadoOficio=oficio.status, firmaOficio=oficio.firmado,
                                     oficio.cerys AS numCerys
                                     FROM oficio
                                     JOIN cerys ON cerys.Numero=oficio.cerys
                                     ORDER BY oficio.id DESC
-                                ");
+                                ", [$user->username]);
     }else{
         //Obtenemos los oficios del Cerys del usuario logueado pendientes o aceptados, 2 indica rechazado
         $oficios    = DB::select("SELECT oficio.id, oficio.oficio, cerys.Nombre AS cerys, oficio.lotes,
