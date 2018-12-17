@@ -48,7 +48,7 @@
                                         <td> {{ ToolsPHP::nombreMotivo($element->MotivoRechazo) }} </td>
                                         <td>
                                             @if($firmado != 1)
-                                                {!! Form::open(['route' => ['firmaLotes', $listaLotes, $oficio, $cerys], 'method' => 'GET', 'style' => "display: inline"]) !!}
+                                                {!! Form::open(['route' => ['firmaLotes', $oficio], 'method' => 'GET', 'style' => "display: inline"]) !!}
                                                     <a href="#" OnClick="editarCredencial({{ $element->Id }});" class="btn btn-danger" title="Modificar estado" data-toggle="modal" data-target="#editarRechazar">
                                                         <i class="fa fa-edit"></i> Editar estado
                                                     </a>
