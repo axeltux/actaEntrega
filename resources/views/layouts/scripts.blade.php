@@ -173,6 +173,7 @@
                 return false;
             }
         }).fail(function(){
+            cerrarModal('editarRechazar');
             alertify.alert("<center><h3>Ocurrio un error.</h3></center><br>");
             return false;
         });
