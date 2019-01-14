@@ -240,7 +240,7 @@ class HomeController extends Controller
         $firmado    = $oficiotbl->firmado;
         $aceptado   = $oficiotbl->status;
         $estado     = Estado::all();
-        $motivo     = Motivo::where('Estado', '<>', 'No aplica')->get();
+        $motivo     = Motivo::whereIn('Id', [3,4,8])->get();
         return view('firma.firmaLotes', compact('lotes', 'listaLotes',
             'contador', 'oficio', 'nom', 'firmado', 'aceptado', 'cerys',
             'estado', 'motivo'));
