@@ -242,7 +242,7 @@ class HomeController extends Controller
         $estado     = Estado::all();
         $motivo     = Motivo::whereIn('Id', [3,4,8])->get();
         return view('firma.firmaLotes', compact('lotes', 'listaLotes',
-            'contador', 'oficio', 'nom', 'firmado', 'aceptado', 'cerys',
+            'oficio', 'nom', 'firmado', 'aceptado', 'cerys',
             'estado', 'motivo'));
     }
 
